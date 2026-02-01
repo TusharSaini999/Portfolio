@@ -64,6 +64,54 @@ export default function Navbar() {
         };
     }, [mobileMenuOpen]);
 
+    // /* Progressive section highlight based on viewport */
+    // useEffect(() => {
+    //     const sections = navLinks.map((link) =>
+    //         document.getElementById(link.href)
+    //     );
+
+    //     if (!sections.length) return;
+
+    //     const observer = new IntersectionObserver(
+    //         (entries) => {
+    //             entries.forEach((entry) => {
+    //                 if (entry.isIntersecting) {
+    //                     const id = entry.target.id;
+
+    //                     setActiveSections((prev) => {
+    //                         if (prev.includes(id)) return prev;
+
+    //                         const index = navLinks.findIndex(
+    //                             (link) => link.href === id
+    //                         );
+
+    //                         const updated = navLinks
+    //                             .slice(0, index + 1)
+    //                             .map((link) => link.href);
+
+    //                         localStorage.setItem(
+    //                             "activeSections",
+    //                             JSON.stringify(updated)
+    //                         );
+
+    //                         return updated;
+    //                     });
+    //                 }
+    //             });
+    //         },
+    //         {
+    //             root: null,
+    //             rootMargin: "-40% 0px -40% 0px", // triggers at section start
+    //             threshold: 0.1,
+    //         }
+    //     );
+
+    //     sections.forEach((section) => {
+    //         if (section) observer.observe(section);
+    //     });
+
+    //     return () => observer.disconnect();
+    // }, [isInitialLoad]);
 
     /* Scroll progress bar */
     useEffect(() => {

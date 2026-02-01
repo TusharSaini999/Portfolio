@@ -1,12 +1,12 @@
 import React from "react";
-import { User, Activity, Code2, GraduationCap, Laptop, Terminal, Sparkles, Coffee, Box, Cpu } from "lucide-react";
+import { GraduationCap, Laptop, Terminal, Sparkles, Box, Cpu } from "lucide-react";
 import { aboutData } from "../Data/Data.jsx";
 
 export default function AboutSection() {
     const { bio, stats, education, intershipStatus, currentLearning, interests, techStack } = aboutData;
 
     return (
-        <section className="relative py-24 px-6 sm:px-12 lg:px-32 bg-slate-50 dark:bg-[#020617] transition-colors duration-500 overflow-hidden">
+        <section id="about" className="relative py-24 px-6 sm:px-12 lg:px-32 bg-slate-50 dark:bg-[#020617] transition-colors duration-500 overflow-hidden">
             {/* Background Decorative Element */}
             <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-125 h-125 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 

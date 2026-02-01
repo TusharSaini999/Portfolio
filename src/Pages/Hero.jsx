@@ -31,7 +31,7 @@ export default function HeroSection() {
     }, [charIndex, title, titleIndex]);
 
     return (
-        <section className="relative min-h-dvh w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between px-6 sm:px-12 lg:px-32 overflow-hidden bg-slate-50 dark:bg-[#020617] dark:text-slate-100 transition-colors duration-500 py-20 lg:py-0">
+        <section id="hero" className="relative min-h-dvh w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between px-6 sm:px-12 lg:px-32 overflow-hidden bg-slate-50 dark:bg-[#020617] dark:text-slate-100 transition-colors duration-500 py-20 lg:py-0">
 
             {/* --- ENGINEER'S GRID BACKGROUND --- */}
             <div className="absolute inset-0 z-0 pointer-events-none">
