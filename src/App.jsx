@@ -1,5 +1,5 @@
 import { Element } from "react-scroll"
-import Navbar from "./Component/navbar"
+import Navbar from "./Component/Navbar.jsx"
 import HeroSection from "./Pages/Hero"
 import AboutSection from "./Pages/About"
 
