@@ -3,7 +3,7 @@ import { GraduationCap, Laptop, Terminal, Sparkles, Box, Cpu } from "lucide-reac
 import { aboutData } from "../Data/Data.jsx";
 
 export default function AboutSection() {
-    const { bio, stats, education, intershipStatus, currentLearning, interests, techStack } = aboutData;
+    const { systemCall,bio, stats, education, intershipStatus, currentLearning, interests, techStack } = aboutData;
 
     return (
         <section id="about" className="relative py-24 px-6 sm:px-12 lg:px-32 bg-slate-50 dark:bg-[#020617] transition-colors duration-500 overflow-hidden">
@@ -16,10 +16,12 @@ export default function AboutSection() {
 
                     {/* --- LEFT SIDE: THE TEXT ENGINE --- */}
                     <div className="space-y-8">
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-0.5 bg-purple-600"></div>
-                            <span className="text-sm font-mono font-bold tracking-[0.3em] text-slate-400 uppercase">
-                                system.init(profile)
+                        <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                            <div className="w-8 sm:w-12 h-0.5 bg-purple-600 shrink-0"></div>
+
+                            <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] 
+                   text-slate-400 uppercase break-all">
+                               {systemCall}
                             </span>
                         </div>
 
