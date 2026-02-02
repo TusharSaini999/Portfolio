@@ -37,3 +37,13 @@ button{
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+/* tailwind.css */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

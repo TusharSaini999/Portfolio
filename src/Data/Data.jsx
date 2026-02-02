@@ -4,6 +4,7 @@ export const navLinks = [
     { name: "Project", href: "project" },
     { name: "Experience", href: "experience" },
     { name: "Stack", href: "stack" },
+    { name: "Credential", href: "credential" },
     { name: "Contact", href: "contact" },
 ];
 
@@ -109,6 +110,8 @@ export const projectData = [
 
 export const projectSection = {
     systemCall: "system.exec(projects)",
+    title: "Featured",
+    subtitle: "Projects.",
     para: "A collection of projects built with clean architecture, optimized performance, and user-first design principles.",
     linkText: "system.fetch(all_repositories)", //Explore More Projects
     linkUrl: "https://github.com/TusharSaini999?tab=repositories"
@@ -146,7 +149,8 @@ export const experienceData = [
 
 export const skillSection = {
     systemCall: "system.exec(skills)",
-    title: "Technical Arsenal.",
+    title: "Technical",
+    subtitle: "Skills.",
     para: "A comprehensive toolkit focused on building scalable web applications and AI-integrated solutions."
 };
 
@@ -192,3 +196,107 @@ export const skillsData = [
         skills: ["VS Code", "Git", "Postman", "Vercel", "Render", "Firebase"]
     }
 ];
+
+export const credentialsData = [
+    {
+        mainTitle: "Hackathons & Competitions",
+        icon: "Trophy",
+        themeColor: "from-purple-600 to-blue-500",
+        subParts: [
+            {
+                label: "Global",
+                items: [
+                    {
+                        title: "Google Solution Challenge",
+                        detail: "Participant",
+                        location: "Global",
+                        year: "2025",
+                        shortInfo: "Built a tech solution aligned with UN Sustainable Development Goals."
+                    }
+                ]
+            },
+            {
+                label: "National",
+                items: [
+                    {
+                        title: "Graph-E-Thon",
+                        detail: "Participant",
+                        location: "National",
+                        year: "2024",
+                        shortInfo: "Competed in a national hackathon focused on graph-based problem solving."
+                    },
+                    {
+                        title: "Bharatiya Antariksh Hackathon (ISRO)",
+                        detail: "Participant",
+                        location: "National",
+                        year: "2025",
+                        shortInfo: "Proposed an AI chatbot using Knowledge Graphs via idea and PPT submission."
+                    }
+                ]
+            },
+            {
+                label: "State",
+                items: [
+                    {
+                        title: "HackIndia Hackathon",
+                        detail: "Finalist (Top 6)",
+                        location: "State",
+                        year: "2025",
+                        shortInfo: "Top 6 finalist in a state-level Web3 & AI hackathon."
+                    }
+                ]
+            },
+            {
+                label: "College",
+                items: [
+                    {
+                        title: "AI Model Making Competition",
+                        detail: "Winner",
+                        location: "Institutional",
+                        year: "2024",
+                        shortInfo: "Won first place for building an efficient AI model."
+                    },
+                    {
+                        title: "Codefest Hackathon",
+                        detail: "Runner-Up",
+                        location: "Institutional",
+                        year: "2024",
+                        shortInfo: "Secured runner-up by delivering a functional solution under time limits."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        mainTitle: "Professional Certifications",
+        icon: "Medal",
+        themeColor: "from-blue-600 to-cyan-500",
+        subParts: [
+            {
+                label: "Professional",
+                items: [
+                    {
+                        title: "Database Foundations",
+                        detail: "Certified",
+                        location: "Verified",
+                        year: "2024",
+                        shortInfo: "Strong foundation in relational databases and SQL."
+                    },
+                    {
+                        title: "Database Design",
+                        detail: "Certified",
+                        location: "Verified",
+                        year: "2024",
+                        shortInfo: "Expertise in schema design and normalization."
+                    }
+                ]
+            }
+        ]
+    }
+];
+
+export const credentialSection = {
+    systemCall: "system.verify(credentials)",
+    title: "Recognized",
+    subtitle: "Credentials."
+}

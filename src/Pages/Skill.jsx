@@ -20,14 +20,16 @@ export default function SkillSection() {
                 {/* --- HEADER --- */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                     <div className="space-y-8">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 md:w-12 h-0.5 bg-purple-600" />
-                            <span className="text-xs md:text-sm font-mono font-bold tracking-[0.2em] md:tracking-[0.3em] text-slate-400 uppercase">
-                                 {skillSection.systemCall}
+                        <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                            <div className="w-8 sm:w-12 h-0.5 bg-purple-600 shrink-0"></div>
+
+                            <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] 
+                                   text-slate-400 uppercase break-all">
+                                {skillSection.systemCall}
                             </span>
                         </div>
                         <h2 className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter">
-                            Technical <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500">Skills.</span>
+                            {skillSection.title}{" "}<span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500">{skillSection.subtitle}</span>
                         </h2>
                     </div>
                     <p className="max-w-md text-slate-600 dark:text-slate-400 text-lg leading-relaxed">

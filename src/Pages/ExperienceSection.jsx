@@ -11,19 +11,20 @@ export default function ExperienceSection() {
             <div className="max-w-7xl mx-auto relative z-10">
 
                 {/* --- HEADER SECTION --- */}
-                <div className="flex flex-col mb-12 md:mb-16 gap-4">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 md:w-12 h-0.5 bg-purple-600" />
-                        <span className="text-xs md:text-sm font-mono font-bold tracking-[0.2em] md:tracking-[0.3em] text-slate-400 uppercase">
-                            {experienceSection.systemCall}
-                        </span>
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div className="space-y-8">
+                        <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                            <div className="w-8 sm:w-12 h-0.5 bg-purple-600 shrink-0"></div>
+
+                            <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] 
+                                   text-slate-400 uppercase break-all">
+                                {experienceSection.systemCall}
+                            </span>
+                        </div>
+                        <h2 className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter">
+                            {experienceSection.title}{" "}<span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500">{experienceSection.subtitle}</span>
+                        </h2>
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter leading-tight">
-                        {experienceSection.title}{" "}
-                        <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500">
-                            {experienceSection.subtitle}
-                        </span>
-                    </h2>
                 </div>
 
                 {/* --- EXPERIENCE LIST --- */}
@@ -34,7 +35,7 @@ export default function ExperienceSection() {
                             className="group relative bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/50 rounded-3xl md:rounded-4xl p-6 md:p-10 lg:p-12 transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(124,58,237,0.15)] hover:-translate-y-1 md:hover:-translate-y-2"
                         >
                             <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-                                
+
                                 {/* Left Side: Company & Role Metadata */}
                                 <div className="w-full lg:w-1/3 space-y-6">
                                     <div className="flex flex-row lg:flex-col items-center lg:items-start gap-5 lg:gap-6">
