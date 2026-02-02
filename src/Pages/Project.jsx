@@ -23,10 +23,12 @@ export default function ProjectSection() {
                 {/* --- HEADER SECTION --- */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                     <div className="space-y-8">
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-0.5 bg-purple-600" />
-                            <span className="text-sm font-mono font-bold tracking-[0.3em] text-slate-400 uppercase">
-                                system.exec(view_projects)
+                        <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                            <div className="w-8 sm:w-12 h-0.5 bg-purple-600 shrink-0"></div>
+
+                            <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] 
+                   text-slate-400 uppercase break-all">
+                                {projectSection.systemCall}
                             </span>
                         </div>
                         <h2 className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter">
@@ -107,18 +109,44 @@ export default function ProjectSection() {
                 </div>
 
                 {/* --- FOOTER CTA --- */}
-                <div className="mt-20 text-center">
+                <div className="mt-16 sm:mt-20 text-center px-4">
                     <a
                         href={projectSection.linkUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="group relative inline-flex items-center gap-3 px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl shadow-purple-500/10 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="
+            group relative
+            inline-flex sm:inline-flex
+            w-full sm:w-auto
+            items-center justify-center
+            gap-2 sm:gap-3
+            px-6 py-4
+            sm:px-10 sm:py-5
+            text-sm sm:text-base
+            bg-slate-900 dark:bg-white
+            text-white dark:text-slate-900
+            font-black
+            rounded-2xl
+            transition-all duration-300
+            hover:scale-105 active:scale-95
+            shadow-xl shadow-purple-500/10
+            focus:outline-none focus:ring-2 focus:ring-purple-500
+        "
                     >
-                        <Code2 size={22} />
-                        {projectSection.linkText}
-                        <span className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                        <Code2 size={20} className="sm:w-5.5 sm:h-5.5" />
+                        <span className="whitespace-normal sm:whitespace-nowrap text-center">
+                            {projectSection.linkText}
+                        </span>
+
+                        <span className="
+            pointer-events-none absolute inset-0 rounded-2xl
+            bg-linear-to-r from-purple-600 to-blue-600
+            opacity-0 group-hover:opacity-10
+            transition-opacity duration-300
+        " />
                     </a>
                 </div>
+
             </div>
 
             {/* --- MODAL --- */}
