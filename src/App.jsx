@@ -2,6 +2,7 @@ import { Element } from "react-scroll"
 import Navbar from "./Component/Navbar.jsx"
 import HeroSection from "./Pages/Hero"
 import AboutSection from "./Pages/About"
+import ProjectSection from "./Pages/Project.jsx"
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
         <AboutSection/>
       </Element>
       <Element name="project">
-        <HeroSection />
+        <ProjectSection/>
       </Element>
       <Element name="experience">
         <HeroSection />

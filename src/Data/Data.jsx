@@ -18,7 +18,7 @@ export const heroData = {
         mail: "mailto:tusharsaini.in@gmail.com"
     },
     ctaText: "$ fetch resume",
-    resumeLink: "/resume.pdf",
+    resumeLink: "Resume/resume.pdf",
     status: "online",
     imageTag: ["Frontend", "Query", "API"]
 };
@@ -42,4 +42,72 @@ export const aboutData = {
         { label: "System Design", percentage: 70 },
         { label: "Cloud Deployment", percentage: 65 }
     ]
+};
+
+export const projectData = [
+    {
+        title: "QuickPost – AI-Powered Blogging Studio",
+        category: "Full-Stack / AI",
+        description:
+            "A full-stack blogging platform enabling users to create, manage, and publish posts with AI-assisted content generation. Features secure authentication, full CRUD functionality, Redux Toolkit state management, and a modern responsive UI. Deployed using Vercel and Appwrite.",
+        image:
+            "Project/quickPost.png",
+        tech: [
+            "React",
+            "Tailwind CSS",
+            "Redux Toolkit",
+            "TinyMCE",
+            "Node.js",
+            "Appwrite",
+            "AI Integration",
+        ],
+        github: "https://github.com/TusharSaini999/QuickPost-Blogging-Studio",
+        demo: "https://quickpostai.vercel.app/",
+    },
+    {
+        title: "LawGenie – AI-Powered Legal Assistance Chatbot",
+        category: "AI / NLP",
+        description:
+            "An AI-driven legal assistance chatbot providing accurate, context-aware answers related to Indian laws such as IPC and CrPC. Uses NLP and vector-based semantic search with FAISS, OpenAI LLM reasoning, and Redis-backed conversational memory for scalable and intelligent legal guidance.",
+        image:
+            "Project/lowGenie.png",
+        tech: [
+            "Python",
+            "FastAPI",
+            "FAISS",
+            "Redis",
+            "LangChain",
+            "OpenAI API",
+            "Google Embeddings",
+        ],
+        github: "#",
+        demo: "#",
+    },
+    {
+        title: "CampusEats – Smart Food Ordering Platform",
+        category: "Full-Stack / Web",
+        description:
+            "A smart food ordering platform designed for college campuses. Students can browse menus, place orders, and track deliveries in real time. Includes a RAG-based AI chatbot powered by the Groq API for food recommendations and user assistance, along with secure authentication, CRUD operations, and live order updates.",
+        image:
+            "Project/campusEats.png",
+        tech: [
+            "React",
+            "Tailwind CSS",
+            "Express.js",
+            "Node.js",
+            "MySQL",
+            "Leaflet.js",
+            "Groq API",
+            "REST APIs",
+        ],
+        github: "https://github.com/TusharSaini999/CampusEats",
+        demo: "https://campuseats.netlify.app/",
+    },
+];
+
+
+export const projectSection = {
+    para: "A collection of projects built with clean architecture, optimized performance, and user-first design principles.",
+    linkText: "system.fetch(all_repositories)", //Explore More Projects
+    linkUrl: "https://github.com/TusharSaini999?tab=repositories"
 };
