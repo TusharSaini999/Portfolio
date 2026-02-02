@@ -24,6 +24,7 @@ export const heroData = {
 };
 
 export const aboutData = {
+    systemCall:"system.init(profile)",
     bio: "Currently pursuing a B.Tech in Computer Science and Engineering, I am a software engineer focused on building high-performance, scalable systems. My philosophy is simple: write clean, maintainable code, design with the user in mind, and continuously optimize for performance and reliability. I bridge the gap between complex system architecture and elegant, intuitive user experiences across platforms.",
     education: {
         degree: "B.Tech in CS",
@@ -107,7 +108,38 @@ export const projectData = [
 
 
 export const projectSection = {
+    systemCall:"system.exec(projects)",
     para: "A collection of projects built with clean architecture, optimized performance, and user-first design principles.",
     linkText: "system.fetch(all_repositories)", //Explore More Projects
     linkUrl: "https://github.com/TusharSaini999?tab=repositories"
 };
+
+
+export const experienceSection = {
+    title: "Professional",
+    subtitle: "Experience.",
+    systemCall: "system.exec(history)"
+};
+export const experienceData = [
+    {
+        company: "Expert IT Brains Private Limited",
+        role: "Software Development Intern",
+        location: "Kurukshetra, Haryana, India",
+        duration: "July 2024 - August 2024",
+        // Add your logo path here
+        logo: "Experience/ExpertIt.png",
+        description: [
+            "Actively contributing to real-world web applications using modern development tools and frameworks.",
+            "Designed and optimized responsive frontend components, integrated backend APIs, and resolved bugs.",
+            "Collaborated with cross-functional teams using Git-based workflows and agile practices.",
+            "Strengthened full-stack development skills and understanding of scalable software systems."
+        ],
+        techStack: [
+            "Full-Stack Development",
+            "Web Technologies",
+            "Database Management",
+            "Artificial Intelligence & Emerging Tech",
+            "Version Control & Collaboration"
+        ],
+    },
+];
