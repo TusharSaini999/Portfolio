@@ -3,6 +3,7 @@ import Navbar from "./Component/Navbar.jsx"
 import HeroSection from "./Pages/Hero"
 import AboutSection from "./Pages/About"
 import ProjectSection from "./Pages/Project.jsx"
+import ExperienceSection from "./Pages/ExperienceSection.jsx"
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
         <ProjectSection/>
       </Element>
       <Element name="experience">
-        <HeroSection />
+        <ExperienceSection/>
       </Element>
       <Element name="stack">
         <HeroSection />
