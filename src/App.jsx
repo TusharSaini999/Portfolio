@@ -4,6 +4,7 @@ import HeroSection from "./Pages/Hero"
 import AboutSection from "./Pages/About"
 import ProjectSection from "./Pages/Project.jsx"
 import ExperienceSection from "./Pages/ExperienceSection.jsx"
+import SkillSection from "./Pages/Skill.jsx"
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
         <ExperienceSection/>
       </Element>
       <Element name="stack">
-        <HeroSection />
+        <SkillSection/>
       </Element>
       <Element name="contact">
         <HeroSection />
