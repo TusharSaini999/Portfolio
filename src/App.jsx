@@ -5,6 +5,7 @@ import AboutSection from "./Pages/About"
 import ProjectSection from "./Pages/Project.jsx"
 import ExperienceSection from "./Pages/ExperienceSection.jsx"
 import SkillSection from "./Pages/Skill.jsx"
+import CredentialsSection from "./Pages/Credential.jsx"
 
 function App() {
 
@@ -15,16 +16,19 @@ function App() {
         <HeroSection />
       </Element>
       <Element name="about">
-        <AboutSection/>
+        <AboutSection />
       </Element>
       <Element name="project">
-        <ProjectSection/>
+        <ProjectSection />
       </Element>
       <Element name="experience">
-        <ExperienceSection/>
+        <ExperienceSection />
       </Element>
       <Element name="stack">
-        <SkillSection/>
+        <SkillSection />
+      </Element>
+      <Element name="credential">
+        <CredentialsSection />
       </Element>
       <Element name="contact">
         <HeroSection />
