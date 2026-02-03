@@ -95,7 +95,7 @@ export default function SectionSpecificFilter() {
                           transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                                             >
                                                 {/* Meta */}
-                                                <div className="flex justify-between mb-5">
+                                                <div className="flex items-center justify-between mb-5">
                                                     <div>
                                                         <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-400">
                                                             {item.location}
@@ -105,10 +105,11 @@ export default function SectionSpecificFilter() {
                                                         </p>
                                                     </div>
 
-                                                    <span className="px-2 py-1 rounded-md text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-500">
+                                                    <span className="inline-flex items-center px-2 py-1 h-fit rounded-md text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-500">
                                                         {sub.label}
                                                     </span>
                                                 </div>
+
 
                                                 {/* Title */}
                                                 <h4 className="text-base sm:text-lg font-bold mb-2 text-slate-900 dark:text-white">
