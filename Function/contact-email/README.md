@@ -1,6 +1,6 @@
 # 📧 Contact Email Function (NodeMailer)
 
-This Appwrite **Node.js Function** sends a confirmation email to users when they submit the **QuickPost contact form**.
+This Appwrite **Node.js Function** sends a confirmation email to users when they submit the **portfolio contact form**.
 It uses **NodeMailer with SMTP** to deliver a professional HTML email with a plain-text fallback.
 
 ---
@@ -19,7 +19,7 @@ It uses **NodeMailer with SMTP** to deliver a professional HTML email with a pla
 
 ### GET `/`
 
-Trigger this route when a user submits the contact form.
+Trigger this route when a visitor submits the portfolio contact form.
 
 #### 📥 Request Body
 
@@ -107,5 +107,6 @@ contact-email/
 
 ## ❤️ Built For
 
-**QuickPost** – Fast & Smart Blogging Platform
+**Tushar Portfolio**
+Personal Developer Portfolio – Contact & Communication System
 Powered by **Appwrite + Node.js**

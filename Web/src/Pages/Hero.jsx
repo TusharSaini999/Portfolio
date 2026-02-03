@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Download, Github, Linkedin, Mail, Terminal, Code2, Database, Binary } from "lucide-react";
 import SocialIcon from "../Component/SocialIcon.jsx";
 import TechNode from "../Component/TechNode.jsx";
-import {heroData} from "../Data/Data.jsx";
+import { heroData } from "../Data/Data.jsx";
 
 export default function HeroSection() {
     const { name, title, description, heroImage, socialLinks, ctaText, resumeLink, status } = heroData;
@@ -92,10 +92,11 @@ export default function HeroSection() {
                     {/* Image Container */}
                     <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-112.5 lg:h-112.5 relative z-10 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-2xl transition-all duration-500 group-hover:scale-[1.01]">
                         <img
-                            src={heroImage}
+                            src={heroImage || "Profile/Profile.avif"}
                             alt="Engineer Profile"
                             className="w-full h-full object-cover saturate-[0.6] hover:saturate-100 transition-all duration-700"
                         />
+
                         {/* Matrix-style overlay */}
                         <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none font-mono text-[8px] break-all p-4">
                             01010111 01100101 01100010 00100000 01000100 01100101 01110110

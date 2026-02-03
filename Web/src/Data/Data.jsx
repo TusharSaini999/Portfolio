@@ -1,8 +1,8 @@
 export const navLinks = [
     { name: "Home", href: "home" },
     { name: "About", href: "about" },
-    { name: "Project", href: "project" },
     { name: "Experience", href: "experience" },
+    { name: "Project", href: "project" },
     { name: "Stack", href: "stack" },
     { name: "Credential", href: "credential" },
     { name: "Contact", href: "contact" },
@@ -12,7 +12,7 @@ export const heroData = {
     name: "TUSHAR SAINI",
     title: ["Software Engineer", "Full Stack Developer", "Tech Enthusiast"],
     description: "Building scalable digital experiences with a focus on performance, clean architecture, and modern engineering practices.",
-    heroImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop",
+    heroImage: "",
     socialLinks: {
         github: "https://github.com/TusharSaini999/",
         linkedin: "https://www.linkedin.com/in/tushar-saini-105865373/",

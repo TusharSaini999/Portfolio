@@ -6,7 +6,7 @@ import ProjectSection from "./Pages/Project.jsx"
 import ExperienceSection from "./Pages/ExperienceSection.jsx"
 import SkillSection from "./Pages/Skill.jsx"
 import CredentialsSection from "./Pages/Credential.jsx"
-import ContactSection from "./Pages/contact.jsx"
+import ContactSection from "./Pages/Contact.jsx"
 import Footer from "./Component/Footer.jsx"
 
 function App() {
@@ -20,11 +20,11 @@ function App() {
       <Element name="about">
         <AboutSection />
       </Element>
-      <Element name="project">
-        <ProjectSection />
-      </Element>
       <Element name="experience">
         <ExperienceSection />
+      </Element>
+      <Element name="project">
+        <ProjectSection />
       </Element>
       <Element name="stack">
         <SkillSection />
