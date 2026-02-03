@@ -6,7 +6,7 @@ import ProjectSection from "./Pages/Project.jsx"
 import ExperienceSection from "./Pages/ExperienceSection.jsx"
 import SkillSection from "./Pages/Skill.jsx"
 import CredentialsSection from "./Pages/Credential.jsx"
-import ContactSection from "./Pages/contact.jsx"
+import ContactSection from "./Pages/Contact.jsx"
 import Footer from "./Component/Footer.jsx"
 
 function App() {
