@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import * as LucideIcons from "lucide-react";
 import { contactData, contactSection, socialLinks, formLabels } from "../Data/Data.jsx";
+import { DatabaseService } from "../Appwrite/Databases.Appwrite.js";
+
+const databaseService = new DatabaseService();
 
 const DynamicIcon = ({ name, className }) => {
     const IconComponent = LucideIcons[name];
@@ -9,27 +12,28 @@ const DynamicIcon = ({ name, className }) => {
 };
 
 export default function ContactSection() {
+    // Status States
+    const [isLoading, setIsLoading] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    
-    // 1. Form and Error State
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
+
+    // Form and Validation States
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [errors, setErrors] = useState({});
 
     const validate = () => {
         let newErrors = {};
-        
-        // Name check
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         if (!formData.name.trim()) newErrors.name = "Name is required";
         
-        // Email check (Regex)
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!formData.email) {
             newErrors.email = "Email is required";
         } else if (!emailRegex.test(formData.email)) {
             newErrors.email = "Please enter a valid email address";
         }
 
-        // Message check
         if (formData.message.length < 10) {
             newErrors.message = "Message must be at least 10 characters long";
         }
@@ -40,16 +44,37 @@ export default function ContactSection() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-        if (errors[name]) setErrors({ ...errors, [name]: "" });
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validate()) {
-            console.log("Form Data Sent:", formData);
+        if (!validate()) return;
+
+        setIsLoading(true);
+        setIsError(false);
+        setIsSuccess(false);
+
+        try {
+            const response = await databaseService.connect({
+                fullName: formData.name,
+                email: formData.email,
+                message: formData.message,
+            });
+
+            if (response.status) {
+                setIsSuccess(true);
+                setFormData({ name: "", email: "", message: "" });
+            } else {
+                setIsError(true);
+            }
+        } catch (error) {
+            setIsError(true);
+        } finally {
+            setIsLoading(false);
             setIsSubmitted(true);
-            setFormData({ name: "", email: "", message: "" }); // Reset form
+            // Auto-hide the popup after 5 seconds
             setTimeout(() => setIsSubmitted(false), 5000);
         }
     };
@@ -115,14 +140,14 @@ export default function ContactSection() {
                                 {/* NAME FIELD */}
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">{formLabels.nameLabel}</label>
-                                    <input 
+                                    <input
                                         name="name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        type="text" 
-                                        placeholder={formLabels.namePlaceholder} 
+                                        type="text"
+                                        placeholder={formLabels.namePlaceholder}
                                         className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border rounded-2xl outline-none transition-all dark:text-white 
-                                        ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`} 
+                                        ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
                                     />
                                     {errors.name && <p className="text-red-500 text-xs ml-2 font-medium">{errors.name}</p>}
                                 </div>
@@ -130,14 +155,14 @@ export default function ContactSection() {
                                 {/* EMAIL FIELD */}
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">{formLabels.emailLabel}</label>
-                                    <input 
+                                    <input
                                         name="email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        type="email" 
-                                        placeholder={formLabels.emailPlaceholder} 
+                                        type="email"
+                                        placeholder={formLabels.emailPlaceholder}
                                         className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border rounded-2xl outline-none transition-all dark:text-white 
-                                        ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`} 
+                                        ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
                                     />
                                     {errors.email && <p className="text-red-500 text-xs ml-2 font-medium">{errors.email}</p>}
                                 </div>
@@ -146,36 +171,57 @@ export default function ContactSection() {
                             {/* MESSAGE FIELD */}
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">{formLabels.messageLabel}</label>
-                                <textarea 
+                                <textarea
                                     name="message"
                                     value={formData.message}
                                     onChange={handleChange}
-                                    rows="4" 
-                                    placeholder={formLabels.messagePlaceholder} 
+                                    rows="4"
+                                    placeholder={formLabels.messagePlaceholder}
                                     className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border rounded-2xl outline-none transition-all dark:text-white resize-none
-                                    ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`} 
+                                    ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
                                 />
                                 {errors.message && <p className="text-red-500 text-xs ml-2 font-medium">{errors.message}</p>}
                             </div>
 
-                            <button type="submit" className="w-full py-5 bg-slate-900 dark:bg-purple-600 text-white font-black text-lg rounded-2xl hover:shadow-[0_20px_40px_-10px_rgba(124,58,237,0.4)] transition-all active:scale-95 flex items-center justify-center gap-3">
-                                <LucideIcons.Send className="w-5 h-5" />
-                                {formLabels.buttonText}
+                            <button 
+                                type="submit" 
+                                disabled={isLoading}
+                                className="w-full py-5 bg-slate-900 dark:bg-purple-600 text-white font-black text-lg rounded-2xl hover:shadow-[0_20px_40px_-10px_rgba(124,58,237,0.4)] transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
+                            >
+                                {isLoading ? (
+                                    <LucideIcons.Loader2 className="w-6 h-6 animate-spin" />
+                                ) : (
+                                    <LucideIcons.Send className="w-5 h-5" />
+                                )}
+                                {isLoading ? "Sending..." : formLabels.buttonText}
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
 
-            {/* --- SUCCESS POPUP --- */}
-            <div className={`fixed bottom-10 right-6 z-100 transform transition-all duration-700 ${isSubmitted ? 'translate-x-0 opacity-100' : 'translate-x-[120%] opacity-0'}`}>
+            {/* --- STATUS POPUP --- */}
+            <div className={`fixed bottom-10 right-6 z-50 transform transition-all duration-700 ${isSubmitted ? 'translate-x-0 opacity-100' : 'translate-x-[120%] opacity-0'}`}>
                 <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-6 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex items-center gap-5 border border-purple-500">
-                    <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center animate-bounce">
-                        <LucideIcons.Check className="text-white w-6 h-6" />
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isError ? 'bg-red-500' : 'bg-purple-600'} animate-bounce`}>
+                        {isError ? (
+                            <LucideIcons.AlertCircle className="text-white w-6 h-6" />
+                        ) : (
+                            <LucideIcons.Check className="text-white w-6 h-6" />
+                        )}
                     </div>
                     <div>
-                        <p className="font-black text-lg">{formLabels.successTitle}</p>
-                        <p className="text-sm opacity-80">{formLabels.successSubtitle}</p>
+                        {isError ? (
+                            <>
+                                <p className="font-black text-lg text-red-500">{formLabels.errorTitle || "Error"}</p>
+                                <p className="text-sm opacity-80">{formLabels.errorSubtitle || "Something went wrong."}</p>
+                            </>
+                        ) : (
+                            <>
+                                <p className="font-black text-lg">{formLabels.successTitle}</p>
+                                <p className="text-sm opacity-80">{formLabels.successSubtitle}</p>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
