@@ -300,3 +300,37 @@ export const credentialSection = {
     title: "Recognized",
     subtitle: "Credentials."
 }
+
+export const contactSection = {
+    systemCall: "system.route(message)",
+    title: "Let’s",
+    subtitle: "Connect",
+    para: "Open to job opportunities and open-source collaborations. Let’s build something impactful together."
+};
+
+
+export const contactData = [
+    { label: "Official Mail", value: "tusharsaini.in@gmail.com", icon: "Mail" },
+    { label: "Mobile", value: "+91 9368283874", icon: "Phone" },
+    { label: "Based In", value: "Haridwar, Uttarakhand, India", icon: "MapPin" }
+];
+
+export const socialLinks = [
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/tushar-saini-105865373/", icon: "Linkedin" },
+    { name: "GitHub", url: "https://github.com/TusharSaini999", icon: "Github" },
+    { name: "Mail", url: "mailto:tusharsaini.in@gmail.com", icon: "Mail" }
+];
+
+
+export const formLabels = {
+    nameLabel: "Full Name",
+    namePlaceholder: "Name",
+    emailLabel: "Work Email",
+    emailPlaceholder: "name@company.com",
+    messageLabel: "Proposal / Opportunity",
+    messagePlaceholder: "Briefly describe the role or project...",
+    buttonText: "Drop a Message",
+    successTitle: "Signal Received!",
+    successSubtitle: "I'll get back to your inquiry shortly.",
+    socialHeading:"Communication Channels"
+};

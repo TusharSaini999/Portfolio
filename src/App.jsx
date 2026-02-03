@@ -6,6 +6,7 @@ import ProjectSection from "./Pages/Project.jsx"
 import ExperienceSection from "./Pages/ExperienceSection.jsx"
 import SkillSection from "./Pages/Skill.jsx"
 import CredentialsSection from "./Pages/Credential.jsx"
+import ContactSection from "./Pages/contact.jsx"
 
 function App() {
 
@@ -31,7 +32,7 @@ function App() {
         <CredentialsSection />
       </Element>
       <Element name="contact">
-        <HeroSection />
+        <ContactSection/>
       </Element>
     </>
   )
