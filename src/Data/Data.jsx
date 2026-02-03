@@ -332,5 +332,7 @@ export const formLabels = {
     buttonText: "Drop a Message",
     successTitle: "Signal Received!",
     successSubtitle: "I'll get back to your inquiry shortly.",
-    socialHeading:"Communication Channels"
+    errorTitle: "Request Failed",
+    errorSubtitle: "Technical issue. Try again later.",
+    socialHeading: "Communication Channels"
 };
