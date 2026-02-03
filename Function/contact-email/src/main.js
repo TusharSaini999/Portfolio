@@ -7,7 +7,7 @@ export default async ({ req, res, log, error }) => {
         ? JSON.parse(req.body)
         : req.body;
 
-    const { name, email } = data;
+    const { fullName, email } = data;
 
     if (!email) {
       throw new Error("Email field is missing");
@@ -24,198 +24,194 @@ export default async ({ req, res, log, error }) => {
     });
 
     await transporter.sendMail({
-      from: `"Quick Post 🚀" <${process.env.SMTP_USER}>`,
+      from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: "Thanks for contacting Quick Post 🚀",
+      subject: "Thanks for reaching out — Message received",
       html: `
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Thanks for Connecting – Quick Post</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Dark Mode Support -->
-    <meta name="color-scheme" content="light dark">
-    <meta name="supported-color-schemes" content="light dark">
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
 
-    <style>
-      @media (prefers-color-scheme: dark) {
-        body {
-          background-color: #111827 !important;
-        }
-        .card {
-          background-color: #1f2933 !important;
-        }
-        .text-main {
-          color: #f9fafb !important;
-        }
-        .text-muted {
-          color: #d1d5db !important;
-        }
-        .footer {
-          background-color: #111827 !important;
-          color: #9ca3af !important;
-        }
-        .highlight {
-          background-color: #2b1c1c !important;
-          color: #fecaca !important;
-          border-left: 5px solid #ef4444 !important;
-        }
+  <style>
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #020617 !important;
       }
-    </style>
-  </head>
+      .card {
+        background-color: rgba(15,23,42,0.5) !important;
+        border-color: #1e293b !important;
+      }
+      .text-main {
+        color: #cbd5f5 !important;
+      }
+      .text-muted {
+        color: #94a3b8 !important;
+      }
+      .accent {
+        color: #c084fc !important;
+      }
+      .btn {
+        background-color: #7c3aed !important;
+      }
+      .footer {
+        background-color: #020617 !important;
+        color: #64748b !important;
+      }
+    }
+  </style>
+</head>
 
-  <body style="margin:0; padding:0; background-color:#f3f4f6; font-family:Arial, Helvetica, sans-serif;">
+<body style="margin:0; padding:0; background-color:#f8fafc; font-family:Arial, Helvetica, sans-serif;">
 
-    <!-- Outer Wrapper -->
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:24px 12px;">
-      <tr>
-        <td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:24px 12px;">
+  <tr>
+    <td align="center">
 
-          <!-- Email Card -->
-          <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
-            class="card"
-            style="
-              max-width:640px;
-              background-color:#ffffff;
-              border-radius:12px;
-              overflow:hidden;
-              box-shadow:0 10px 25px rgba(0,0,0,0.12);
-            ">
+      <!-- Card -->
+      <table
+        width="100%"
+        cellpadding="0"
+        cellspacing="0"
+        role="presentation"
+        class="card"
+        style="
+          max-width:640px;
+          background-color:rgba(255,255,255,0.5);
+          backdrop-filter: blur(10px);
+          border:1px solid #e2e8f0;
+          border-radius:14px;
+          box-shadow:0 10px 30px rgba(0,0,0,0.08);
+          overflow:hidden;
+        "
+      >
 
-            <!-- Gradient Header -->
-            <tr>
-              <td align="center"
-                style="
-                  padding:26px 16px;
-                  background:#dc2626;
-                  background:linear-gradient(90deg,#f87171,#ef4444,#dc2626,#b91c1c);
-                ">
-                <h1 style="margin:0; color:#ffffff; font-size:24px;">
-                  Quick Post
-                </h1>
-                <p style="margin:6px 0 0; color:#fee2e2; font-size:13px;">
-                  Fast & Easy Blogging
-                </p>
-              </td>
-            </tr>
+        <!-- Header -->
+        <tr>
+          <td align="center" style="padding:28px 18px;">
+            <h1 style="margin:0; font-size:22px; color:#0f172a;">
+              Portfolio Contact
+            </h1>
+            <p style="margin:6px 0 0; font-size:13px; color:#64748b;">
+              Thank you for reaching out
+            </p>
+          </td>
+        </tr>
 
-            <!-- Body -->
-            <tr>
-              <td align="center" style="padding:32px 20px;" class="text-main">
+        <!-- Body -->
+        <tr>
+          <td align="center" class="text-main" style="padding:26px 22px; color:#334155;">
 
-                <h2 style="margin:0; font-size:20px;">
-                  Thanks for Connecting! ❤️
-                </h2>
+            <h2 style="margin:0; font-size:18px;">
+              Message Received 👋
+            </h2>
 
-                <p style="font-size:14px; line-height:1.7; margin:18px 0;">
-                  Hi <strong>${name || "there"}</strong>,<br /><br />
-                  Thank you for reaching out to
-                  <strong style="color:#dc2626;">Quick Post</strong>.
-                  We truly appreciate your interest.
-                </p>
+            <p style="margin:18px 0; font-size:14px; line-height:1.7;">
+              Hi <strong>${fullName || "there"}</strong>,
+              <br /><br />
+              Thank you for contacting me through my portfolio.
+              Your message has been successfully received and I appreciate you taking the time to reach out.
+            </p>
 
-                <p style="font-size:14px; line-height:1.7; margin:18px 0;">
-                  Your message has been <strong>successfully received</strong> and is under review.
-                  Our team will respond as soon as possible.
-                </p>
+            <p style="margin:18px 0; font-size:14px; line-height:1.7;">
+              I’ll review your message and get back to you as soon as possible.
+            </p>
 
-                <!-- Highlight Box -->
-                <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:24px 0;">
-                  <tr>
-                    <td class="highlight"
-                      style="
-                        padding:18px;
-                        background-color:#fef2f2;
-                        border-left:5px solid #dc2626;
-                        border-radius:8px;
-                        font-size:13px;
-                        color:#7f1d1d;
-                        text-align:left;
-                        line-height:1.6;
-                      ">
-                      🔔 <strong>What happens next?</strong><br /><br />
-                      • Our support team reviews your query<br />
-                      • You’ll receive a reply via email<br />
-                      • Response time may vary during peak hours
-                    </td>
-                  </tr>
-                </table>
-
-                <!-- CTA -->
-                <a
-                  href="https://quickpostai.vercel.app/"
+            <!-- Info Box -->
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:24px 0;">
+              <tr>
+                <td
                   style="
-                    display:inline-block;
-                    padding:14px 26px;
-                    font-size:14px;
-                    font-weight:bold;
-                    color:#ffffff;
-                    text-decoration:none;
-                    border-radius:999px;
-                    background:#dc2626;
-                    background:linear-gradient(90deg,#ef4444,#dc2626,#b91c1c);
-                  ">
-                  Visit Quick Post
-                </a>
+                    padding:16px;
+                    background-color:#ffffff;
+                    border:1px solid #e2e8f0;
+                    border-radius:10px;
+                    font-size:13px;
+                    text-align:left;
+                    line-height:1.6;
+                    color:#475569;
+                  "
+                >
+                  <strong class="accent" style="color:#7c3aed;">What happens next?</strong><br /><br />
+                  • Your inquiry is reviewed personally<br />
+                  • You’ll receive a response via email<br />
+                  • Typical response time: 24–48 hours
+                </td>
+              </tr>
+            </table>
 
-                <p style="margin-top:26px; font-size:13px;">
-                  Warm regards,<br />
-                  <strong>Quick Post Team</strong>
-                </p>
+            <!-- CTA -->
+            <a
+              href="https://your-portfolio-url.com"
+              class="btn"
+              style="
+                display:inline-block;
+                padding:13px 26px;
+                font-size:14px;
+                font-weight:600;
+                color:#ffffff;
+                text-decoration:none;
+                border-radius:999px;
+                background-color:#0f172a;
+              "
+            >
+              View Portfolio
+            </a>
 
-              </td>
-            </tr>
+            <p style="margin-top:26px; font-size:13px;">
+              Best regards,<br />
+              <strong>Your Name</strong>
+            </p>
 
-            <!-- Footer -->
-            <tr>
-              <td align="center"
-                class="footer"
-                style="
-                  padding:18px 16px;
-                  background-color:#f9fafb;
-                  font-size:11px;
-                  color:#6b7280;
-                ">
-                This is a system-generated email. Please do not reply.
-              </td>
-            </tr>
+          </td>
+        </tr>
 
-          </table>
+        <!-- Footer -->
+        <tr>
+          <td
+            align="center"
+            class="footer"
+            style="
+              padding:16px;
+              font-size:11px;
+              background-color:#f1f5f9;
+              color:#64748b;
+            "
+          >
+            This is an automated confirmation email.<br />
+            Please do not reply to this message.
+          </td>
+        </tr>
 
-        </td>
-      </tr>
-    </table>
+      </table>
 
-  </body>
+    </td>
+  </tr>
+</table>
+
+</body>
 </html>
-
       `,
-      text:`Hi ${name || "there"},
+      text: `Hi ${fullName || "there"},
 
-Thanks for connecting with Quick Post!
+Thank you for contacting me through my portfolio.
 
-We have successfully received your message, and our team is currently reviewing your query. We appreciate you taking the time to reach out to us.
+Your message has been successfully received and I will review it shortly.
+You can expect a response within 24–48 hours.
 
-What happens next?
-- Our support team is reviewing your request
-- You will receive a response via email
-- Response time may vary during peak hours
-
-If you’d like to explore more, visit Quick Post:
-https://quickpostai.vercel.app/
-
-Warm regards,
-Quick Post Team
+Best regards,
+Your Name
 
 ---
-This is a system-generated email.
-Please do not reply to this message.
-`,
+This is an automated confirmation email.
+Please do not reply.`,
     });
 
-    log(`Email sent to: ${email}`);
+    log(`Portfolio contact email sent to: ${email}`);
 
     return res.json({ success: true });
   } catch (err) {
