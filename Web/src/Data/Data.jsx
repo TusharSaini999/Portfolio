@@ -311,7 +311,6 @@ export const contactSection = {
 
 export const contactData = [
     { label: "Official Mail", value: "tusharsaini.in@gmail.com", icon: "Mail" },
-    { label: "Mobile", value: "+91 9368283874", icon: "Phone" },
     { label: "Based In", value: "Haridwar, Uttarakhand, India", icon: "MapPin" }
 ];
 
