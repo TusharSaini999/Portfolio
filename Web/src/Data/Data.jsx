@@ -12,7 +12,7 @@ export const heroData = {
     name: "TUSHAR SAINI",
     title: ["Software Engineer", "Full Stack Developer", "Tech Enthusiast"],
     description: "Building scalable digital experiences with a focus on performance, clean architecture, and modern engineering practices.",
-    heroImage: "",
+    heroImage: "Profile/Profile.jpg",
     socialLinks: {
         github: "https://github.com/TusharSaini999/",
         linkedin: "https://www.linkedin.com/in/tushar-saini-105865373/",

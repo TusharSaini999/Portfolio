@@ -94,7 +94,7 @@ export default function HeroSection() {
                         <img
                             src={heroImage || "Profile/Profile.avif"}
                             alt="Engineer Profile"
-                            className="w-full h-full object-cover saturate-[0.6] hover:saturate-100 transition-all duration-700"
+                            className="w-full h-full object-cover hover:saturate-100 transition-all duration-700"
                         />
 
                         {/* Matrix-style overlay */}
