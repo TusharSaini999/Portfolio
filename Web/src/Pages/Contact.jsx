@@ -34,7 +34,7 @@ export default function ContactSection() {
             newErrors.email = "Please enter a valid email address";
         }
 
-        if (formData.message.length < 10) {
+        if (formData.message.trim().length < 10) {
             newErrors.message = "Message must be at least 10 characters long";
         }
 
