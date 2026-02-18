@@ -4,6 +4,14 @@ import { contactData, contactSection, socialLinks, formLabels } from "../Data/Da
 import { DatabaseService } from "../Appwrite/Databases.Appwrite.js";
 
 const databaseService = new DatabaseService();
+const inputStyle = `
+w-full px-5 py-3
+bg-slate-50 dark:bg-slate-800/50
+border rounded-xl outline-none transition-all
+text-slate-800 dark:text-white
+text-sm
+placeholder-slate-500 dark:placeholder-slate-400
+`;
 
 const DynamicIcon = ({ name, className }) => {
     const IconComponent = LucideIcons[name];
@@ -146,7 +154,10 @@ export default function ContactSection() {
                                         onChange={handleChange}
                                         type="text"
                                         placeholder={formLabels.namePlaceholder}
-                                        className={`w-full px-5 py-3 bg-slate-50 dark:bg-slate-800/50 border rounded-xl outline-none transition-all dark:text-white text-sm ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
+                                        className={`${inputStyle} ${errors.name
+                                            ? "border-red-500 focus:ring-red-500"
+                                            : "border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2"
+                                            }`}
                                     />
                                     {errors.name && <p className="text-red-500 text-xs ml-2 font-medium">{errors.name}</p>}
                                 </div>
@@ -159,7 +170,10 @@ export default function ContactSection() {
                                         onChange={handleChange}
                                         type="email"
                                         placeholder={formLabels.emailPlaceholder}
-                                        className={`w-full px-5 py-3 bg-slate-50 dark:bg-slate-800/50 border rounded-xl outline-none transition-all dark:text-white text-sm ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
+                                        className={`${inputStyle} ${errors.email
+                                            ? "border-red-500 focus:ring-red-500"
+                                            : "border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2"
+                                            }`}
                                     />
                                     {errors.email && <p className="text-red-500 text-xs ml-2 font-medium">{errors.email}</p>}
                                 </div>
@@ -173,7 +187,10 @@ export default function ContactSection() {
                                     onChange={handleChange}
                                     rows="4"
                                     placeholder={formLabels.messagePlaceholder}
-                                    className={`w-full px-5 py-3 bg-slate-50 dark:bg-slate-800/50 border rounded-xl outline-none transition-all dark:text-white resize-none text-sm placeholder-slate-400 dark:placeholder-slate-500 ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
+                                    className={`${inputStyle} resize-none ${errors.message
+                                            ? "border-red-500 focus:ring-red-500"
+                                            : "border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2"
+                                        }`}
                                 />
                                 {errors.message && <p className="text-red-500 text-xs ml-2 font-medium">{errors.message}</p>}
                             </div>
