@@ -292,7 +292,27 @@ export const credentialsData = [
                 ]
             }
         ]
+    },
+    {
+        mainTitle: "Organization & Event Management",
+        icon: "Award",
+        themeColor: "from-orange-600 to-pink-500",
+        subParts: [
+            {
+                label: "Inter-University",
+                items: [
+                    {
+                        title: "E-Commerce Hackathon",
+                        detail: "Organizer & Coordinator",
+                        location: "Inter-University",
+                        year: "2026",
+                        shortInfo: "Organized and managed an inter-university E-Commerce hackathon."
+                    }
+                ]
+            }
+        ]
     }
+
 ];
 
 export const credentialSection = {
