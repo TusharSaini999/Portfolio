@@ -173,7 +173,7 @@ export default function ContactSection() {
                                     onChange={handleChange}
                                     rows="4"
                                     placeholder={formLabels.messagePlaceholder}
-                                    className={`w-full px-5 py-3 bg-slate-50 dark:bg-slate-800/50 border rounded-xl outline-none transition-all dark:text-white resize-none text-sm ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
+                                    className={`w-full px-5 py-3 bg-slate-50 dark:bg-slate-800/50 border rounded-xl outline-none transition-all dark:text-white resize-none text-sm placeholder-slate-400 dark:placeholder-slate-500 ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-purple-600 focus:ring-2'}`}
                                 />
                                 {errors.message && <p className="text-red-500 text-xs ml-2 font-medium">{errors.message}</p>}
                             </div>
