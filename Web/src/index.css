@@ -47,3 +47,4 @@ button{
   scrollbar-width: none;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
