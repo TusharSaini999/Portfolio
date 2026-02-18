@@ -68,8 +68,14 @@ export default async ({ req, res, log, error }) => {
   </style>
 </head>
 
-<body style="margin:0; padding:0; background-color:#f8fafc; font-family:Arial, Helvetica, sans-serif;">
-
+<body
+  style="
+    margin:0;
+    padding:0;
+    background: linear-gradient(to right, #9333ea, #6366f1);
+    font-family:Arial, Helvetica, sans-serif;
+  "
+>
 <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:26px 12px;">
   <tr>
     <td align="center">
