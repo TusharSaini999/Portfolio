@@ -72,7 +72,7 @@ VITE_APPWRITE_TABLE_CONTECT_ID="TABLE_ID"
 
 ![Project Photo](Assets/project-photo.png)
 
-**Live Demo:** [https://tusharsainidev.vercel.app/](https://tusharsainidev.vercel.app/)
+**Live Demo:** [https://tusharsaini.tech/](https://tusharsaini.tech/)
 
 ---
 
