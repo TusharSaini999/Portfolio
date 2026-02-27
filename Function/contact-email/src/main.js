@@ -159,7 +159,7 @@ export default async ({ req, res, log, error }) => {
 
             <!-- CTA -->
             <a
-              href="https://tusharsainidev.vercel.app/"
+              href="https://tusharsaini.tech/"
               class="btn"
               style="
                 display:inline-block;
