@@ -41,7 +41,7 @@ export const aboutData = {
     stats: [
         { label: "Frontend Architecture", percentage: 92 },
         { label: "Backend Scalability", percentage: 78 },
-        { label: "System Design", percentage: 70 },
+        { label: "Database Design", percentage: 70 },
         { label: "Cloud Deployment", percentage: 65 }
     ]
 };
