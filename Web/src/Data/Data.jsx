@@ -19,7 +19,7 @@ export const heroData = {
         mail: "mailto:tusharsaini.in@gmail.com"
     },
     ctaText: "$ fetch resume",
-    resumeLink: "Resume/resume.pdf",
+    resumeLink: "Resume/TusharSaini_SDE_Resume",
     status: "online",
     imageTag: ["Frontend", "Query", "API"]
 };
