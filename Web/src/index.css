@@ -47,4 +47,14 @@ button{
   scrollbar-width: none;
 }
 
+/* Hide scrollbars globally while keeping scroll enabled */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
