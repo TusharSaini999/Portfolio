@@ -67,23 +67,23 @@ export const projectData = [
         demo: "https://quickpostai.vercel.app/",
     },
     {
-        title: "LawGenie – AI-Powered Legal Assistance Chatbot",
-        category: "AI / NLP",
+        title: "LawGenie AI-Powered Legal Research Assistant",
+        category: "AI / Legal Tech / RAG",
         description:
-            "An AI-driven legal assistance chatbot providing accurate, context-aware answers related to Indian laws such as IPC and CrPC. Uses NLP and vector-based semantic search with FAISS, OpenAI LLM reasoning, and Redis-backed conversational memory for scalable and intelligent legal guidance.",
+            "LawGenie AI is a full-stack AI legal assistant designed for Indian legal research and legal question answering. It enables users to ask legal queries in natural language, receive contextual responses, and maintain secure chat history through an intelligent and scalable platform.",
         image:
-            "Project/lowGenie.png",
+            "Project/lawGenie.png",
         tech: [
             "Python",
             "FastAPI",
-            "FAISS",
-            "Redis",
-            "LangChain",
-            "OpenAI API",
-            "Google Embeddings",
+            "React",
+            "MongoDB",
+            "RAG",
+            "Vector Search",
+            "Groq API"
         ],
-        github: "#",
-        demo: "#",
+        github: "https://github.com/TusharSaini999/LawGenie-AI",
+        demo: "https://law-genie-ai.vercel.app/",
     },
     {
         title: "CampusEats – Smart Food Ordering Platform",
