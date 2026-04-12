@@ -87,7 +87,9 @@ VITE_APPWRITE_TABLE_CONTECT_ID="TABLE_ID"
 
 ## 🤝 Contributing
 
-Contributions, suggestions, and improvements are welcome!
+Contributions, suggestions, and improvements are welcome. Please review [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+Please also follow the [Code of Conduct](CODE_OF_CONDUCT.md) and check [SECURITY.md](SECURITY.md) if you discover a vulnerability.
 
 1. Fork the repository
 2. Create a new branch
