@@ -103,7 +103,7 @@ Please also follow the [Code of Conduct](CODE_OF_CONDUCT.md) and check [SECURITY
 Open to job opportunities and collaborations.
 
 * **Email:** [tusharsaini.in@gmail.com](mailto:tusharsaini.in@gmail.com)
-* **LinkedIn:** [https://www.linkedin.com/in/tushar-saini-105865373/](https://www.linkedin.com/in/tushar-saini-105865373/)
+* **LinkedIn:** [https://www.linkedin.com/in/tusharsaini999](https://www.linkedin.com/in/tusharsaini999)
 * **GitHub:** [https://github.com/TusharSaini999](https://github.com/TusharSaini999)
 
 ---

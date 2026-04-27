@@ -15,11 +15,11 @@ export const heroData = {
     heroImage: "https://res.cloudinary.com/cloud451752/image/upload/v1775385774/Profile_tcpmoe.jpg",
     socialLinks: {
         github: "https://github.com/TusharSaini999/",
-        linkedin: "https://www.linkedin.com/in/tushar-saini-105865373/",
+        linkedin: "https://www.linkedin.com/in/tusharsaini999",
         mail: "mailto:tusharsaini.in@gmail.com"
     },
     ctaText: "$ fetch resume",
-    resumeLink: "Resume/TusharSaini_SDE_Resume.pdf",
+    resumeLink: "Resume/Tushar_Saini_Resume.pdf",
     status: "online",
     imageTag: ["Frontend", "Query", "API"]
 };
@@ -335,7 +335,7 @@ export const contactData = [
 ];
 
 export const socialLinks = [
-    { name: "LinkedIn", url: "https://www.linkedin.com/in/tushar-saini-105865373/", icon: "Linkedin" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/tusharsaini999", icon: "Linkedin" },
     { name: "GitHub", url: "https://github.com/TusharSaini999", icon: "Github" },
     { name: "Mail", url: "mailto:tusharsaini.in@gmail.com", icon: "Mail" }
 ];
