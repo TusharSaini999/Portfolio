@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef,useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
 import { Menu, X, Terminal } from "lucide-react";
 import { Link, scroller } from "react-scroll";
 import { navLinks } from "../Data/Data.jsx";
@@ -13,7 +13,7 @@ export default function Navbar() {
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
 
-    const applyTheme = () => {
+    const applyTheme = useCallback(() => {
         if (theme === "system") {
             const systemPrefersDark = window.matchMedia(
                 "(prefers-color-scheme: dark)"
@@ -32,7 +32,7 @@ export default function Navbar() {
             document.documentElement.classList.add("dark");
             localStorage.setItem("theme", "dark");
         }
-    };
+    }, [theme]);
 
     useLayoutEffect(() => {
         const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -53,7 +53,7 @@ export default function Navbar() {
             media.removeEventListener("change", handleChange);
         };
 
-    }, [theme]);
+    }, [theme, applyTheme]);
 
     /* Initial progressive highlight + restore last position */
     useEffect(() => {

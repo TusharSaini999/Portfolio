@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.dark body {
+  background: #020617;
+  color: #e2e8f0;
+}
+
 @keyframes blink {
 
     0%,

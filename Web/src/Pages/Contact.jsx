@@ -1,9 +1,34 @@
 import React, { useState } from "react";
-import * as LucideIcons from "lucide-react";
+import {
+    AlertCircle,
+    Check,
+    Database,
+    Github,
+    Loader2,
+    Mail,
+    MapPin,
+    Phone,
+    Send,
+    Linkedin,
+} from "lucide-react";
 import { contactData, contactSection, socialLinks, formLabels } from "../Data/Data.jsx";
 import { DatabaseService } from "../Appwrite/Databases.Appwrite.js";
 
 const databaseService = new DatabaseService();
+
+const iconMap = {
+    AlertCircle,
+    Check,
+    Database,
+    Github,
+    Loader2,
+    Mail,
+    MapPin,
+    Phone,
+    Send,
+    Linkedin,
+};
+
 const inputStyle = `
 w-full px-5 py-3
 bg-slate-50 dark:bg-slate-800/50
@@ -14,8 +39,8 @@ placeholder-slate-500 dark:placeholder-slate-400
 `;
 
 const DynamicIcon = ({ name, className }) => {
-    const IconComponent = LucideIcons[name];
-    if (!IconComponent) return <LucideIcons.Mail className={className} />;
+    const IconComponent = iconMap[name];
+    if (!IconComponent) return <Mail className={className} />;
     return <IconComponent className={className} />;
 };
 
@@ -77,7 +102,7 @@ export default function ContactSection() {
             } else {
                 setIsError(true);
             }
-        } catch (error) {
+        } catch {
             setIsError(true);
         } finally {
             setIsLoading(false);
@@ -200,7 +225,7 @@ export default function ContactSection() {
                                 disabled={isLoading}
                                 className="w-full py-4 bg-slate-900 dark:bg-purple-600 text-white font-black text-base rounded-xl hover:shadow-lg transition-all active:scale-95 flex items-center justify-center gap-3"
                             >
-                                {isLoading ? <LucideIcons.Loader2 className="w-5 h-5 animate-spin" /> : <LucideIcons.Send className="w-5 h-5" />}
+                                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
                                 {isLoading ? "Sending..." : formLabels.buttonText}
                             </button>
                         </form>
@@ -222,10 +247,10 @@ export default function ContactSection() {
                 <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 sm:px-8 sm:py-6 rounded-2xl sm:rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex items-center gap-4 sm:gap-5 border border-purple-500">
                     <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 ${isError ? 'bg-red-500' : 'bg-purple-600'} animate-bounce`}>
                         {isError && (
-                            <LucideIcons.AlertCircle className="text-white w-5 h-5 sm:w-6 sm:h-6" />
+                            <AlertCircle className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                         )}
                         {isSuccess && (
-                            <LucideIcons.Check className="text-white w-5 h-5 sm:w-6 sm:h-6" />
+                            <Check className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                         )}
                     </div>
                     <div className="min-w-0">

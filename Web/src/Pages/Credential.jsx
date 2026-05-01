@@ -1,10 +1,15 @@
 import React, { useState, useMemo } from "react";
-import * as LucideIcons from "lucide-react";
+import { Award, Trophy } from "lucide-react";
 import { credentialsData, credentialSection } from "../Data/Data.jsx";
 
+const iconMap = {
+    Award,
+    Trophy,
+};
+
 const DynamicIcon = ({ name, className }) => {
-    const IconComponent = LucideIcons[name];
-    return IconComponent ? <IconComponent className={className} /> : <LucideIcons.Award className={className} />;
+    const IconComponent = iconMap[name];
+    return IconComponent ? <IconComponent className={className} /> : <Award className={className} />;
 };
 
 export default function SectionSpecificFilter() {
@@ -28,7 +33,7 @@ export default function SectionSpecificFilter() {
                             <div className="w-8 sm:w-12 h-0.5 bg-purple-600 shrink-0"></div>
 
                             <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] 
-                                                   text-slate-400 uppercase break-all">
+                                                   text-slate-400 dark:text-slate-300 uppercase break-all">
                                 {credentialSection.systemCall}
                             </span>
                         </div>
@@ -97,7 +102,7 @@ export default function SectionSpecificFilter() {
                                                 {/* Meta */}
                                                 <div className="flex items-center justify-between mb-5">
                                                     <div>
-                                                        <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-400">
+                                                        <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-300">
                                                             {item.location}
                                                         </p>
                                                         <p className="text-xs font-mono text-purple-600">
@@ -105,7 +110,7 @@ export default function SectionSpecificFilter() {
                                                         </p>
                                                     </div>
 
-                                                    <span className="inline-flex items-center px-2 py-1 h-fit rounded-md text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-500">
+                                                    <span className="inline-flex items-center px-2 py-1 h-fit rounded-md text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300">
                                                         {sub.label}
                                                     </span>
                                                 </div>

@@ -20,7 +20,7 @@ export default function AboutSection() {
                             <div className="w-8 sm:w-12 h-0.5 bg-purple-600 shrink-0"></div>
 
                             <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] 
-                   text-slate-400 uppercase break-all">
+                   text-slate-400 dark:text-slate-300 uppercase break-all">
                                {systemCall}
                             </span>
                         </div>
@@ -43,9 +43,9 @@ export default function AboutSection() {
                                     <GraduationCap size={24} className="text-purple-600" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] uppercase tracking-widest text-slate-400 font-extrabold mb-1">Education</p>
+                                    <p className="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-300 font-extrabold mb-1">Education</p>
                                     <p className="text-sm font-bold dark:text-slate-200 leading-tight">{education.degree}</p>
-                                    <p className="text-[10px] text-slate-500">{education.school}</p>
+                                    <p className="text-[10px] text-slate-500 dark:text-slate-400">{education.school}</p>
                                 </div>
                             </div>
 
@@ -54,16 +54,16 @@ export default function AboutSection() {
                                     <Laptop size={24} className="text-indigo-600" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] uppercase tracking-widest text-slate-400 font-extrabold mb-1">Status</p>
+                                    <p className="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-300 font-extrabold mb-1">Status</p>
                                     <p className="text-sm font-bold dark:text-slate-200 leading-tight">{intershipStatus.status}</p>
-                                    <p className="text-[10px] text-slate-500 italic">{intershipStatus.details}</p>
+                                    <p className="text-[10px] text-slate-500 dark:text-slate-400 italic">{intershipStatus.details}</p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Tech Stack Horizontal List */}
                         <div className="pt-4">
-                            <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-4 flex items-center gap-2">
+                            <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 dark:text-slate-300 mb-4 flex items-center gap-2">
                                 <Box size={14} /> Core_Architecture
                             </h4>
                             <div className="flex flex-wrap gap-2">
@@ -87,7 +87,7 @@ export default function AboutSection() {
                                 <div className="flex justify-between items-center mb-10">
                                     <div className="flex items-center gap-2">
                                         <Terminal size={18} className="text-purple-600" />
-                                        <h3 className="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">Growth_Metrics</h3>
+                                        <h3 className="text-[11px] font-mono font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Growth_Metrics</h3>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

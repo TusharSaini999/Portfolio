@@ -1,11 +1,21 @@
 import React from "react";
-import * as LucideIcons from "lucide-react";
+import { Box, Cpu, Database, Layers, Server, Sparkles, Terminal } from "lucide-react";
 import { skillsData, skillSection } from "../Data/Data.jsx";
 
 // Helper component to render icon by string name
+const iconMap = {
+    Box,
+    Cpu,
+    Database,
+    Layers,
+    Server,
+    Sparkles,
+    Terminal,
+};
+
 const DynamicIcon = ({ name, className }) => {
-    const IconComponent = LucideIcons[name];
-    if (!IconComponent) return <LucideIcons.Cpu className={className} />; // Fallback icon
+    const IconComponent = iconMap[name];
+    if (!IconComponent) return <Cpu className={className} />; // Fallback icon
     return <IconComponent className={className} />;
 };
 

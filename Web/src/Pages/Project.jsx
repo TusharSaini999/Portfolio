@@ -27,7 +27,7 @@ export default function ProjectSection() {
                             <div className="w-8 sm:w-12 h-0.5 bg-purple-600 shrink-0"></div>
 
                             <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] 
-                   text-slate-400 uppercase break-all">
+                   text-slate-400 dark:text-slate-300 uppercase break-all">
                                 {projectSection.systemCall}
                             </span>
                         </div>
