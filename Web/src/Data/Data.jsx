@@ -309,9 +309,23 @@ export const credentialsData = [
                         shortInfo: "Organized and managed an inter-university E-Commerce hackathon."
                     }
                 ]
+            },
+            {
+                label: "State-Level",
+                items: [
+                    {
+                        title: "Q Hackathon 2026",
+                        detail: "Organizer & Tech Lead",
+                        location: "State-Level",
+                        year: "2026",
+                        shortInfo: "Organized & Managed the 36-hour Q Hackathon 2026 with 350+ participants."
+                    }
+                ]
             }
         ]
-    }
+
+    },
+
 
 ];
 
