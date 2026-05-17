@@ -78,7 +78,6 @@ VITE_APPWRITE_TABLE_CONTECT_ID="TABLE_ID"
 
 ## 🚀 Future Enhancements
 
-* Dark / Light mode toggle Section
 * Blog or writing section
 * Project filtering by tech stack
 * Performance and SEO optimizations
