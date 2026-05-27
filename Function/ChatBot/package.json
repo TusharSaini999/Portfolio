@@ -1,15 +1,15 @@
 {
   "name": "chatbot",
   "version": "1.0.0",
-  "description": "Chatbot function that calls an LLM (OpenAI)",
+  "description": "Chatbot function that calls a Groq LLM with portfolio tools",
   "main": "src/main.js",
   "type": "module",
   "scripts": {
     "format": "prettier --write ."
   },
   "dependencies": {
-    "node-appwrite": "^14.1.0",
-    "openai": "^4.3.0"
+    "groq-sdk": "^1.2.0",
+    "node-appwrite": "^14.1.0"
   },
   "devDependencies": {
     "prettier": "^3.2.5"
