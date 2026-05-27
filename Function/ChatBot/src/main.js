@@ -107,7 +107,7 @@ export default async ({ req, res, log, error }) => {
     }
 
     log('Chatbot generated reply via Groq');
-
+    log({ success: true, reply });
     return res.json({ success: true, reply });
   } catch (err) {
     const message = err?.message || String(err);
