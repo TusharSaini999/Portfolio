@@ -8,6 +8,7 @@ function normalizeHistory(history) {
 
   return history
     .filter((entry) => entry && typeof entry === 'object' && typeof entry.role === 'string' && typeof entry.content === 'string')
+    .slice(-5)
     .map((entry) => ({
       role: entry.role,
       content: entry.content,
@@ -48,6 +49,7 @@ export default async ({ req, res, log, error }) => {
   try {
     const data = parseRequestBody(req.body);
     const message = extractUserMessage(data);
+    const history = normalizeHistory(data?.history);
 
     
     if (!message) {
@@ -55,7 +57,7 @@ export default async ({ req, res, log, error }) => {
     }
 
     const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
-    const messages = [{ role: 'system', content: buildPortfolioSystemPrompt() }, { role: 'user', content: message }];
+    const messages = [{ role: 'system', content: buildPortfolioSystemPrompt() }, ...history, { role: 'user', content: message }];
 
     const model = process.env.GROQ_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct';
     const temperature = Number(process.env.GROQ_TEMPERATURE ?? 1);
