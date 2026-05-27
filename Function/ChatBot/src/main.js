@@ -15,14 +15,39 @@ function normalizeHistory(history) {
 }
 
 function extractUserMessage(data) {
+  if (typeof data === 'string') {
+    return data.trim();
+  }
+
   return data?.message || data?.prompt || data?.query || data?.text || '';
+}
+
+function parseRequestBody(body) {
+  if (body == null) {
+    return { message: '' };
+  }
+
+  if (typeof body !== 'string') {
+    return body;
+  }
+
+  const trimmedBody = body.trim();
+
+  if (!trimmedBody) {
+    return { message: '' };
+  }
+
+  if (trimmedBody.startsWith('{') || trimmedBody.startsWith('[')) {
+    return JSON.parse(trimmedBody);
+  }
+
+  return { message: trimmedBody };
 }
 
 export default async ({ req, res, log, error }) => {
   try {
-    const data = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const data = parseRequestBody(req.body);
     const message = extractUserMessage(data);
-    const history = normalizeHistory(data?.history);
 
     if (!process.env.GROQ_API_KEY) {
       throw new Error('GROQ_API_KEY is not configured');
@@ -33,7 +58,7 @@ export default async ({ req, res, log, error }) => {
     }
 
     const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
-    const messages = [{ role: 'system', content: buildPortfolioSystemPrompt() }, ...history, { role: 'user', content: message }];
+  const messages = [{ role: 'system', content: buildPortfolioSystemPrompt() }, { role: 'user', content: message }];
 
     const model = process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
     const temperature = Number(process.env.GROQ_TEMPERATURE ?? 1);
@@ -90,7 +115,10 @@ export default async ({ req, res, log, error }) => {
 
     throw new Error('Tool loop limit reached before producing a final answer');
   } catch (err) {
-    error(err?.message || err);
-    return res.json({ success: false, error: err?.message || String(err) });
+    const message = err?.message || String(err);
+
+    error(message);
+
+    return res.json({ success: false, error: message });
   }
 };
