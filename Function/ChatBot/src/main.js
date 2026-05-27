@@ -60,10 +60,10 @@ export default async ({ req, res, log, error }) => {
     const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
   const messages = [{ role: 'system', content: buildPortfolioSystemPrompt() }, { role: 'user', content: message }];
 
-    const model = process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
+    const model = process.env.GROQ_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct';
     const temperature = Number(process.env.GROQ_TEMPERATURE ?? 1);
     const topP = Number(process.env.GROQ_TOP_P ?? 1);
-    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 8192);
+    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 4096);
     const reasoningEffort = process.env.GROQ_REASONING_EFFORT || 'medium';
     const maxToolRounds = Number(process.env.GROQ_MAX_TOOL_ROUNDS ?? 4);
 
