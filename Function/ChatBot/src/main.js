@@ -49,10 +49,7 @@ export default async ({ req, res, log, error }) => {
     const data = parseRequestBody(req.body);
     const message = extractUserMessage(data);
 
-    if (!process.env.GROQ_API_KEY) {
-      throw new Error('GROQ_API_KEY is not configured');
-    }
-
+    
     if (!message) {
       throw new Error('Message field is missing');
     }
@@ -63,8 +60,7 @@ export default async ({ req, res, log, error }) => {
     const model = process.env.GROQ_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct';
     const temperature = Number(process.env.GROQ_TEMPERATURE ?? 1);
     const topP = Number(process.env.GROQ_TOP_P ?? 1);
-    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 8000);
-    const reasoningEffort = process.env.GROQ_REASONING_EFFORT || 'low';
+    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 1024);
 
     const runCompletion = async () =>
       client.chat.completions.create({
@@ -74,7 +70,6 @@ export default async ({ req, res, log, error }) => {
         temperature,
         top_p: topP,
         max_completion_tokens: maxCompletionTokens,
-        reasoning_effort: reasoningEffort,
         stream: false,
       });
 
