@@ -63,14 +63,11 @@ export default async ({ req, res, log, error }) => {
     const model = process.env.GROQ_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct';
     const temperature = Number(process.env.GROQ_TEMPERATURE ?? 1);
     const topP = Number(process.env.GROQ_TOP_P ?? 1);
-    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 4096);
-    const reasoningEffort = process.env.GROQ_REASONING_EFFORT || 'medium';
-    const maxToolRounds = Number(process.env.GROQ_MAX_TOOL_ROUNDS ?? 4);
+    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 8000);
+    const reasoningEffort = process.env.GROQ_REASONING_EFFORT || 'low';
 
-    let assistantMessage = null;
-
-    for (let round = 0; round < maxToolRounds; round += 1) {
-      const completion = await client.chat.completions.create({
+    const runCompletion = async () =>
+      client.chat.completions.create({
         model,
         messages,
         tools: portfolioTools,
@@ -81,16 +78,13 @@ export default async ({ req, res, log, error }) => {
         stream: false,
       });
 
-      assistantMessage = completion.choices?.[0]?.message;
+    let assistantMessage = (await runCompletion()).choices?.[0]?.message;
 
-      if (!assistantMessage) {
-        throw new Error('Groq returned an empty response');
-      }
+    if (!assistantMessage) {
+      throw new Error('Groq returned an empty response');
+    }
 
-      if (!assistantMessage.tool_calls?.length) {
-        break;
-      }
-
+    if (assistantMessage.tool_calls?.length) {
       messages.push(assistantMessage);
 
       for (const toolCall of assistantMessage.tool_calls) {
@@ -104,11 +98,11 @@ export default async ({ req, res, log, error }) => {
         });
       }
 
-      assistantMessage = null;
-    }
+      assistantMessage = (await runCompletion()).choices?.[0]?.message;
 
-    if (!assistantMessage) {
-      throw new Error('Tool loop limit reached before producing a final answer');
+      if (!assistantMessage) {
+        throw new Error('Groq returned an empty response after tool use');
+      }
     }
 
     const reply = assistantMessage.content?.trim() || '';
