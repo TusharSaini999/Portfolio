@@ -1,14 +1,15 @@
-# 🤖 Chatbot Function (LLM)
+# 🤖 Chatbot Function (Groq LLM)
 
-This Appwrite **Node.js Function** provides a simple chatbot endpoint that forwards a user's message to an LLM (OpenAI) and returns the assistant's reply.
+This Appwrite **Node.js Function** provides a chatbot endpoint that forwards a user's message to Groq and returns the assistant's reply. The chatbot can call separate tools for each portfolio section so the model can fetch only the data it needs.
 
 ---
 
 ## 🚀 Features
 
-* 💬 Forwards user message to OpenAI Chat API
+* 💬 Forwards user message to Groq Chat Completions
 * 🔁 Supports optional `history` array to continue conversations
-* 🔧 Configurable model, temperature, and max tokens via env vars
+* 🧰 Separate tools for navigation, hero, about, projects, experience, skills, credentials, and contact data
+* 🔧 Configurable model, temperature, token limits, and reasoning via env vars
 
 ---
 
@@ -53,7 +54,7 @@ Trigger this function when your frontend sends a user message to the chatbot.
 ## 🛠️ Tech Stack
 
 * **Runtime:** Node.js 18
-* **LLM:** OpenAI (via `openai` npm package)
+* **LLM:** Groq (via `groq-sdk` npm package)
 * **Platform:** Appwrite Functions
 
 ---
@@ -75,11 +76,14 @@ Trigger this function when your frontend sends a user message to the chatbot.
 Configure these variables in **Appwrite → Functions → Settings → Variables**
 
 ```env
-OPENAI_API_KEY=sk-...
+GROQ_API_KEY=gsk_...
 # Optional tuning
-OPENAI_MODEL=gpt-3.5-turbo
-OPENAI_TEMPERATURE=0.7
-OPENAI_MAX_TOKENS=600
+GROQ_MODEL=openai/gpt-oss-120b
+GROQ_TEMPERATURE=1
+GROQ_TOP_P=1
+GROQ_MAX_COMPLETION_TOKENS=8192
+GROQ_REASONING_EFFORT=medium
+GROQ_MAX_TOOL_ROUNDS=4
 ```
 
 ---
@@ -89,7 +93,9 @@ OPENAI_MAX_TOKENS=600
 ```txt
 chatbot/
 ├─ src/
-│  └─ main.js
+│  ├─ main.js
+│  └─ Data/
+│     └─ Data.jsx
 ├─ package.json
 └─ README.md
 ```
@@ -100,7 +106,7 @@ chatbot/
 
 * Conversation persistence and logging
 * Rate limiting and abuse protection
-* Role-based prompts for different assistant personas
+* More specialized section tools if the site grows
 
 ---
 
