@@ -61,6 +61,33 @@ function parseToolArguments(argumentsText) {
   }
 }
 
+function extractFailedGeneration(err) {
+  const directFailedGeneration = err?.error?.failed_generation || err?.failed_generation;
+
+  if (typeof directFailedGeneration === 'string' && directFailedGeneration.trim()) {
+    return directFailedGeneration.trim();
+  }
+
+  const rawMessage = err?.message;
+
+  if (typeof rawMessage !== 'string') {
+    return '';
+  }
+
+  const jsonStart = rawMessage.indexOf('{');
+
+  if (jsonStart < 0) {
+    return '';
+  }
+
+  try {
+    const parsed = JSON.parse(rawMessage.slice(jsonStart));
+    return parsed?.error?.failed_generation?.trim?.() || '';
+  } catch {
+    return '';
+  }
+}
+
 export default async ({ req, res, log, error }) => {
   try {
     const data = parseRequestBody(req.body);
@@ -135,6 +162,16 @@ export default async ({ req, res, log, error }) => {
     return res.json({ success: true, reply, contactDraft });
   } catch (err) {
     const message = err?.message || String(err);
+    const failedGeneration = extractFailedGeneration(err);
+
+    if (message.includes('tool_use_failed') && failedGeneration) {
+      log('Groq tool call failed; returning failed_generation as fallback reply');
+      return res.json({
+        success: true,
+        reply: failedGeneration,
+        contactDraft,
+      });
+    }
 
     error(message);
 
