@@ -1,5 +1,9 @@
 import Groq from 'groq-sdk';
-import { buildPortfolioSystemPrompt, getPortfolioToolResult, portfolioTools } from './Data/Data.js';
+import {
+  buildPortfolioSystemPrompt,
+  getPortfolioToolResult,
+  portfolioTools,
+} from './Data/Data.js';
 
 function normalizeHistory(history) {
   if (!Array.isArray(history)) {
@@ -7,7 +11,13 @@ function normalizeHistory(history) {
   }
 
   return history
-    .filter((entry) => entry && typeof entry === 'object' && typeof entry.role === 'string' && typeof entry.content === 'string')
+    .filter(
+      (entry) =>
+        entry &&
+        typeof entry === 'object' &&
+        typeof entry.role === 'string' &&
+        typeof entry.content === 'string'
+    )
     .slice(-5)
     .map((entry) => ({
       role: entry.role,
@@ -62,9 +72,13 @@ function parseToolArguments(argumentsText) {
 }
 
 function extractFailedGeneration(err) {
-  const directFailedGeneration = err?.error?.failed_generation || err?.failed_generation;
+  const directFailedGeneration =
+    err?.error?.failed_generation || err?.failed_generation;
 
-  if (typeof directFailedGeneration === 'string' && directFailedGeneration.trim()) {
+  if (
+    typeof directFailedGeneration === 'string' &&
+    directFailedGeneration.trim()
+  ) {
     return directFailedGeneration.trim();
   }
 
@@ -105,21 +119,27 @@ export default async ({ req, res, log, error }) => {
     }
 
     const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
-    const messages = [{ role: 'system', content: buildPortfolioSystemPrompt() }, ...history, { role: 'user', content: message }];
+    const messages = [
+      { role: 'system', content: buildPortfolioSystemPrompt() },
+      ...history,
+      { role: 'user', content: message },
+    ];
 
-    const model = process.env.GROQ_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct';
+    // FIX 2: Updated fallback model to a valid Groq Llama 3 model
+    const model = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
     const temperature = Number(process.env.GROQ_TEMPERATURE ?? 1);
     const topP = Number(process.env.GROQ_TOP_P ?? 1);
-    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 1024);
+    const maxTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 2048);
 
     const runCompletion = async () =>
       client.chat.completions.create({
         model,
         messages,
-        tools: portfolioTools,
+        // FIX 4: Only pass tools array if it has items to avoid 400 errors
+        tools: portfolioTools?.length > 0 ? portfolioTools : undefined,
         temperature,
         top_p: topP,
-        max_completion_tokens: maxCompletionTokens,
+        max_tokens: maxTokens, // FIX 1: max_tokens instead of max_completion_tokens
         stream: false,
       });
 
@@ -130,24 +150,41 @@ export default async ({ req, res, log, error }) => {
     }
 
     if (assistantMessage.tool_calls?.length) {
-      messages.push(assistantMessage);
+      // FIX 4: Ensure content is at least null when pushing tool calls back
+      messages.push({
+        ...assistantMessage,
+        content: assistantMessage.content || null,
+      });
 
       for (const toolCall of assistantMessage.tool_calls) {
         const toolName = toolCall.function?.name;
         const toolArguments = parseToolArguments(toolCall.function?.arguments);
-        const toolResult = getPortfolioToolResult(toolName, toolArguments);
+
+        // FIX 3: Add await just in case your tool function handles async DB/Email operations
+        const toolResult = await getPortfolioToolResult(
+          toolName,
+          toolArguments
+        );
 
         if (toolName === 'prepare_contact_form') {
           contactDraft = toolResult;
         }
 
+        // FIX 4: Safely stringify the result and provide the tool name
+        const stringifiedResult =
+          typeof toolResult === 'string'
+            ? toolResult
+            : JSON.stringify(toolResult);
+
         messages.push({
           role: 'tool',
           tool_call_id: toolCall.id,
-          content: JSON.stringify(toolResult),
+          name: toolName,
+          content: stringifiedResult || 'null',
         });
       }
 
+      // Run completion again with the tool results
       assistantMessage = (await runCompletion()).choices?.[0]?.message;
 
       if (!assistantMessage) {
@@ -175,7 +212,9 @@ export default async ({ req, res, log, error }) => {
     const failedGeneration = extractFailedGeneration(err);
 
     if (message.includes('tool_use_failed') && failedGeneration) {
-      log('Groq tool call failed; returning failed_generation as fallback reply');
+      log(
+        'Groq tool call failed; returning failed_generation as fallback reply'
+      );
       return res.json({
         success: true,
         reply: failedGeneration,
