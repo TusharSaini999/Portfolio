@@ -495,6 +495,31 @@ export const portfolioTools = [
             },
         },
     },
+    {
+        type: "function",
+        function: {
+            name: "prepare_contact_form",
+            description: "Capture contact form details shared by the user so the frontend can prefill the contact form.",
+            parameters: {
+                type: "object",
+                properties: {
+                    fullName: {
+                        type: "string",
+                        description: "The user's full name if they provided it.",
+                    },
+                    email: {
+                        type: "string",
+                        description: "The user's email address if they provided it.",
+                    },
+                    message: {
+                        type: "string",
+                        description: "The user's message or inquiry details if they provided it.",
+                    },
+                },
+                additionalProperties: false,
+            },
+        },
+    },
 ];
 
 export const portfolioToolHandlers = {
@@ -511,16 +536,30 @@ export const portfolioToolHandlers = {
         socialLinks,
         formLabels,
     }),
+    prepare_contact_form: ({ fullName = "", email = "", message = "" } = {}) => {
+        const draft = {
+            fullName: typeof fullName === "string" ? fullName.trim() : "",
+            email: typeof email === "string" ? email.trim() : "",
+            message: typeof message === "string" ? message.trim() : "",
+        };
+
+        return {
+            draft,
+            missingFields: Object.entries(draft)
+                .filter(([, value]) => !value)
+                .map(([key]) => key),
+        };
+    },
 };
 
-export function getPortfolioToolResult(toolName) {
+export function getPortfolioToolResult(toolName, toolArguments = {}) {
     const handler = portfolioToolHandlers[toolName];
 
     if (!handler) {
         throw new Error(`Unknown portfolio tool: ${toolName}`);
     }
 
-    return handler();
+    return handler(toolArguments);
 }
 
 export function buildPortfolioSystemPrompt() {
@@ -589,6 +628,10 @@ You also have access to the user's previous 5 messages in the current conversati
   - Resume
   - Experience
   - Contact section
+
+- If the user wants to reach out, collect their name, email, and message when available.
+- Use the prepare_contact_form tool to pass those details to the frontend so the contact form can be prefilled.
+- If any contact field is missing, ask a concise follow-up question instead of guessing.
 
 ## Project Discussions
 
