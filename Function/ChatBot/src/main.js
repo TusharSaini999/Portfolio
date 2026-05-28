@@ -45,11 +45,28 @@ function parseRequestBody(body) {
   return { message: trimmedBody };
 }
 
+function parseToolArguments(argumentsText) {
+  if (!argumentsText) {
+    return {};
+  }
+
+  if (typeof argumentsText !== 'string') {
+    return argumentsText;
+  }
+
+  try {
+    return JSON.parse(argumentsText);
+  } catch {
+    return {};
+  }
+}
+
 export default async ({ req, res, log, error }) => {
   try {
     const data = parseRequestBody(req.body);
     const message = extractUserMessage(data);
     const history = normalizeHistory(data?.history);
+    let contactDraft = null;
 
     
     if (!message) {
@@ -86,7 +103,12 @@ export default async ({ req, res, log, error }) => {
 
       for (const toolCall of assistantMessage.tool_calls) {
         const toolName = toolCall.function?.name;
-        const toolResult = getPortfolioToolResult(toolName);
+        const toolArguments = parseToolArguments(toolCall.function?.arguments);
+        const toolResult = getPortfolioToolResult(toolName, toolArguments);
+
+        if (toolName === 'prepare_contact_form') {
+          contactDraft = toolResult;
+        }
 
         messages.push({
           role: 'tool',
@@ -109,8 +131,8 @@ export default async ({ req, res, log, error }) => {
     }
 
     log('Chatbot generated reply via Groq');
-    log({ success: true, reply });
-    return res.json({ success: true, reply });
+    log({ success: true, reply, contactDraft });
+    return res.json({ success: true, reply, contactDraft });
   } catch (err) {
     const message = err?.message || String(err);
 
