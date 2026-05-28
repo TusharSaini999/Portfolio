@@ -88,14 +88,18 @@ function extractFailedGeneration(err) {
   }
 }
 
+function getFallbackReply() {
+  return "I couldn't generate a direct answer from the available portfolio data. Please ask about skills, projects, experience, credentials, or contact details.";
+}
+
 export default async ({ req, res, log, error }) => {
+  let contactDraft = null;
+
   try {
     const data = parseRequestBody(req.body);
     const message = extractUserMessage(data);
     const history = normalizeHistory(data?.history);
-    let contactDraft = null;
 
-    
     if (!message) {
       throw new Error('Message field is missing');
     }
@@ -154,7 +158,13 @@ export default async ({ req, res, log, error }) => {
     const reply = assistantMessage.content?.trim() || '';
 
     if (!reply) {
-      throw new Error('Groq did not return a final answer');
+      const fallbackReply = getFallbackReply();
+      log('Groq returned no final text; using fallback reply');
+      return res.json({
+        success: true,
+        reply: fallbackReply,
+        contactDraft,
+      });
     }
 
     log('Chatbot generated reply via Groq');
@@ -175,6 +185,10 @@ export default async ({ req, res, log, error }) => {
 
     error(message);
 
-    return res.json({ success: false, error: message });
+    return res.json({
+      success: true,
+      reply: getFallbackReply(),
+      contactDraft,
+    });
   }
 };
