@@ -1,29 +1,28 @@
 # 🤖 Chatbot Function (Groq LLM)
 
-This Appwrite **Node.js Function** provides a chatbot endpoint that forwards a user's message to Groq and returns the assistant's reply. The chatbot can call separate tools for each portfolio section so the model can fetch only the data it needs.
+This Appwrite **Node.js Function** powers the portfolio chatbot. It sends the user's message to Groq, uses portfolio tools when needed, and returns the assistant reply. When the model prepares a contact draft, the function returns that draft so the frontend can prefill the contact form.
 
 ---
 
 ## 🚀 Features
 
-* 💬 Forwards user message to Groq Chat Completions
-* 🔁 Supports optional `history` array to continue conversations
-* 🧰 Separate tools for navigation, hero, about, projects, experience, skills, credentials, and contact data
-* 🔧 Configurable model, temperature, token limits, and reasoning via env vars
+* 💬 Forwards user messages to Groq Chat Completions
+* 🔁 Supports optional `history` to keep the conversation context
+* 🧰 Portfolio tools for navigation, hero, about, projects, experience, skills, credentials, and contact data
+* 📝 Optional `contactDraft` response for contact-form prefill in the UI
+* 🔧 Configurable model, temperature, token limits, and top-p via env vars
 
 ---
 
 ## 🧰 Usage
 
-Trigger this function when your frontend sends a user message to the chatbot.
+Send a user message and optional conversation history to this function.
 
 #### 📥 Request Body (JSON)
 
 ```json
 {
-  "fullName": "John Doe",
-  "email": "john@example.com",
-  "message": "Hello — I'd like to work with you on a project.",
+  "message": "I want to do a project with you",
   "history": [
     { "role": "user", "content": "Hi" },
     { "role": "assistant", "content": "Hello! How can I help?" }
@@ -36,7 +35,15 @@ Trigger this function when your frontend sends a user message to the chatbot.
 ```json
 {
   "success": true,
-  "reply": "Hi John — thanks for reaching out! ..."
+  "reply": "Thanks for reaching out. The contact form has been prepared.",
+  "contactDraft": {
+    "draft": {
+      "fullName": "Tushar Saini",
+      "email": "tusharsaini.in@gmail.com",
+      "message": "I want to do a project with you"
+    },
+    "missingFields": []
+  }
 }
 ```
 
@@ -51,22 +58,28 @@ Trigger this function when your frontend sends a user message to the chatbot.
 
 ---
 
+## 🔌 Frontend Integration
+
+The frontend listens for the `portfolio:contact-draft` event and fills the contact form automatically. The chatbot does **not** submit the form itself.
+
+---
+
 ## 🛠️ Tech Stack
 
 * **Runtime:** Node.js 18
-* **LLM:** Groq (via `groq-sdk` npm package)
+* **LLM:** Groq via `groq-sdk`
 * **Platform:** Appwrite Functions
 
 ---
 
 ## ⚙️ Configuration
 
-| Setting       | Value          |
-| ------------- | -------------- |
-| Runtime       | Node.js (18.0) |
-| Entrypoint    | `src/main.js`  |
-| Build Command | `npm install`  |
-| Permissions   | `any`          |
+| Setting       | Value                      |
+| ------------- | -------------------------- |
+| Runtime       | Node.js (18.0)             |
+| Entrypoint    | `src/main.js`              |
+| Build Command | `npm install`              |
+| Permissions   | `any`                      |
 | Timeout       | adjust as needed for LLM latency |
 
 ---
@@ -95,21 +108,21 @@ chatbot/
 ├─ src/
 │  ├─ main.js
 │  └─ Data/
-│     └─ Data.jsx
+│     └─ Data.js
 ├─ package.json
 └─ README.md
 ```
 
 ---
 
-## 🧠 Future Enhancements
+## 🧠 Notes
 
-* Conversation persistence and logging
-* Rate limiting and abuse protection
-* More specialized section tools if the site grows
+* Conversation history is limited to the latest five user/assistant messages.
+* Contact drafts are returned for prefill only; the frontend handles form submission.
+* If the model cannot collect all contact details, it should ask a short follow-up question.
 
 ---
 
 ## ❤️ Built For
 
-**Tushar Portfolio** — Chat assistant endpoint for the portfolio site
+**Tushar Portfolio** — chatbot endpoint for the portfolio site
