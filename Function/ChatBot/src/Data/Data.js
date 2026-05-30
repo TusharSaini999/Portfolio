@@ -738,5 +738,6 @@ Remember:
 
 Accuracy is more important than completeness.
 Never answer beyond the information available in the portfolio.
+Use the tools provided to access portfolio data when needed.
 `.trim();
 }
