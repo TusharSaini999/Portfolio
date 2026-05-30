@@ -12,6 +12,15 @@ const initialMessages = [
   },
 ];
 
+const samplePrompts = [
+  "Fill contact form",
+  "Best projects",
+  "Tech stack",
+  "AI Projects",
+  "Experience",
+  "Achievements"
+];
+
 function buildHistory(messages) {
   return messages
     .filter((message) => message.role === "user" || message.role === "assistant")
@@ -86,10 +95,8 @@ export default function ChatBotWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, isOpen]);
 
-  const sendMessage = async (event) => {
-    event.preventDefault();
-
-    const trimmedInput = input.trim();
+  const sendPromptToBot = async (promptText) => {
+    const trimmedInput = promptText.trim();
     if (!trimmedInput || !env.CHATBOT_FUNCTION_ID || !appwriteFunctions || isLoading) {
       return;
     }
@@ -172,11 +179,21 @@ export default function ChatBotWidget() {
     }
   };
 
+  const sendMessage = async (event) => {
+    event.preventDefault();
+    await sendPromptToBot(input);
+  };
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       event.currentTarget.form?.requestSubmit();
     }
+  };
+
+  const handlePromptSelect = (prompt) => {
+    setInput(prompt);
+    void sendPromptToBot(prompt);
   };
 
   return (
@@ -268,6 +285,27 @@ export default function ChatBotWidget() {
             </div>
 
             <form onSubmit={sendMessage} className="border-t border-slate-200 dark:border-slate-800 p-3">
+              <div className="mb-3 rounded-2xl border border-slate-200 bg-slate-50/90 px-3 py-2 dark:border-slate-800 dark:bg-slate-900/60">
+                <div className="flex items-center justify-between gap-3 pb-2">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                    Quick prompts
+                  </p>
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500">Scroll sideways</p>
+                </div>
+                <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide snap-x snap-mandatory">
+                  {samplePrompts.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      onClick={() => handlePromptSelect(prompt)}
+                      className="shrink-0 snap-start rounded-full border border-slate-200 bg-white px-3 py-2 text-left text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-900"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex items-end gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm dark:border-slate-800 dark:bg-slate-950">
                 <textarea
                   rows={1}
