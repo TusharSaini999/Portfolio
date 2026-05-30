@@ -6,6 +6,7 @@ const env = {
   APPWRITE_TABLE_CONTACT_ID: String(
     import.meta.env.VITE_APPWRITE_TABLE_CONTECT_ID,
   ),
+  CHATBOT_FUNCTION_ID: String(import.meta.env.VITE_CHATBOT_FUNCTION_ID || ""),
 };
 
 export default env;

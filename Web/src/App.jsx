@@ -8,12 +8,14 @@ import SkillSection from "./Pages/Skill.jsx"
 import CredentialsSection from "./Pages/Credential.jsx"
 import ContactSection from "./Pages/Contact.jsx"
 import Footer from "./Component/Footer.jsx"
+import ChatBotWidget from "./Component/ChatBotWidget.jsx"
 
 function App() {
 
   return (
     <>
       <Navbar />
+      <ChatBotWidget />
       <Element name="home">
         <HeroSection />
       </Element>
