@@ -236,12 +236,12 @@ export default function ContactSection() {
             {/* --- STATUS POPUP: MOBILE BOTTOM-TO-UP TRANSITION --- */}
             <div
                 className={`fixed z-50 transform transition-all duration-700 ease-out
-        /* Position: Centered bottom on mobile, Bottom-right on desktop */
-        bottom-6 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-10 sm:w-auto
+        /* Position: Centered bottom on mobile, Bottom-left on desktop */
+        bottom-6 left-4 right-4 sm:left-6 sm:right-auto sm:bottom-10 sm:w-auto
         
         ${isSubmitted
                         ? 'translate-y-0 translate-x-0 opacity-100'
-                        : 'opacity-0 pointer-events-none translate-y-20 sm:translate-y-0 sm:translate-x-[120%]'
+                        : 'opacity-0 pointer-events-none translate-y-20 sm:translate-y-0 sm:-translate-x-[120%]'
                     }`}
             >
                 <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 sm:px-8 sm:py-6 rounded-2xl sm:rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex items-center gap-4 sm:gap-5 border border-purple-500">
