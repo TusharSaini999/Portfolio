@@ -475,7 +475,7 @@ export const portfolioTools = [
         type: "function",
         function: {
             name: "get_credential_data",
-            description: "Get the credentials section including hackathons, certifications, and event management entries.",
+            description: "REQUIRED for questions about achievements, certifications, credentials, awards, hackathons, competitions, accomplishments, and event management. Returns the complete credentials data.",
             parameters: {
                 type: "object",
                 properties: {},
