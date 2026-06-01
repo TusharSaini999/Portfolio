@@ -91,12 +91,10 @@ Configure these variables in **Appwrite → Functions → Settings → Variables
 ```env
 GROQ_API_KEY=gsk_...
 # Optional tuning
-GROQ_MODEL=openai/gpt-oss-120b
-GROQ_TEMPERATURE=1
-GROQ_TOP_P=1
-GROQ_MAX_COMPLETION_TOKENS=4096
-GROQ_REASONING_EFFORT=medium
-GROQ_MAX_TOOL_ROUNDS=4
+GROQ_MODEL=meta-llama/llama-4-scout-17b-16e-instruct
+GROQ_TEMPERATURE=0.2
+GROQ_TOP_P=0.8
+GROQ_MAX_COMPLETION_TOKENS=1012
 ```
 
 ---
