@@ -81,7 +81,7 @@ VITE_APPWRITE_TABLE_CONTECT_ID="TABLE_ID"
 * Blog or writing section
 * Project filtering by tech stack
 * Performance and SEO optimizations
-* AI Chatbot assistant — deployed and live on the site;
+* AI Chatbot assistant — deployed and live on the site
 ---
 
 ## 🤝 Contributing
