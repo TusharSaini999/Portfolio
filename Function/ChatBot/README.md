@@ -119,6 +119,12 @@ chatbot/
 * Contact drafts are returned for prefill only; the frontend handles form submission.
 * If the model cannot collect all contact details, it should ask a short follow-up question.
 
+## 📌 Where to integrate
+
+- Frontend widget: `Web/src/Component/ChatBotWidget.jsx` (the portfolio frontend imports and mounts `ChatBotWidget`).
+- Ensure `VITE_CHATBOT_FUNCTION_ID` is set in `Web/.env` (or `Web/.env.sample`) to point at this Appwrite function.
+- The frontend listens for the `portfolio:contact-draft` event and will prefill the contact form; the chatbot itself does not submit forms.
+
 ---
 
 ## ❤️ Built For
