@@ -14,6 +14,9 @@ export default function Navbar() {
     const buttonRef = useRef(null);
 
     const applyTheme = useCallback(() => {
+        const root = document.documentElement;
+        root.classList.add("theme-switching");
+
         if (theme === "system") {
             const systemPrefersDark = window.matchMedia(
                 "(prefers-color-scheme: dark)"
@@ -32,6 +35,12 @@ export default function Navbar() {
             document.documentElement.classList.add("dark");
             localStorage.setItem("theme", "dark");
         }
+
+        window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+                root.classList.remove("theme-switching");
+            });
+        });
     }, [theme]);
 
     useLayoutEffect(() => {

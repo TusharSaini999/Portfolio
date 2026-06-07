@@ -82,3 +82,10 @@ button{
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition-property: none !important;
+  animation: none !important;
+}
