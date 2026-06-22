@@ -105,6 +105,42 @@ export const projectData = [
         github: "https://github.com/TusharSaini999/CampusEats",
         demo: "https://campuseats.netlify.app/",
     },
+    {
+        title: "VectorGraph-Engine – AI Retrieval Engine",
+        category: "AI / RAG / Search Engine",
+        description:
+            "An AI retrieval engine combining vector search and knowledge graphs to optimize context retrieval for large-scale RAG systems.",
+        image:
+            "Project/vectorGraph.png",
+        tech: [
+            "Python",
+            "Vector Search",
+            "Knowledge Graphs",
+            "RAG",
+            "AI"
+        ],
+        github: "https://github.com/TusharSaini999/VectorGraph-Engine",
+        demo: "https://github.com/TusharSaini999/VectorGraph-Engine",
+    },
+    {
+        title: "Resume Saathi – AI ATS Analyzer",
+        category: "Full-Stack / AI",
+        description:
+            "An AI-powered ATS resume analysis platform that helps users upload resumes, receive structured feedback, compare against job descriptions, and improve quality with AI-driven suggestions.",
+        image:
+            "Project/resumeSaathi.png",
+        tech: [
+            "React",
+            "Tailwind CSS",
+            "Node.js",
+            "Express",
+            "MongoDB",
+            "Redux Toolkit",
+            "Groq API"
+        ],
+        github: "https://github.com/TusharSaini999/Resume-Saathi",
+        demo: "https://resume-saathi.vercel.app/",
+    }
 ];
 
 
@@ -563,7 +599,7 @@ export function getPortfolioToolResult(toolName, toolArguments = {}) {
 }
 
 export function buildPortfolioSystemPrompt() {
-  return `
+    return `
 You are the AI assistant for Tushar Saini's developer portfolio.
 
 Your primary responsibility is to answer questions using ONLY the information available in the portfolio data provided to you.

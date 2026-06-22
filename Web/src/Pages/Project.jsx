@@ -41,12 +41,12 @@ export default function ProjectSection() {
                 </div>
 
                 {/* --- PROJECT GRID --- */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="flex flex-wrap justify-center gap-10">
                     {projectData.map((project, index) => (
                         <div
                             key={index}
                             onClick={() => setSelectedProject(project)}
-                            className="group relative flex flex-col bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/50 rounded-4xl overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(124,58,237,0.25)] hover:-translate-y-3 cursor-pointer"
+                            className="w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-1.666rem)] group relative flex flex-col bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/50 rounded-4xl overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(124,58,237,0.25)] hover:-translate-y-3 cursor-pointer"
                         >
                             {/* Image Container */}
                             <div className="relative aspect-16/10 overflow-hidden">
