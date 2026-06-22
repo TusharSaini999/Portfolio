@@ -46,10 +46,10 @@ export default function ProjectSection() {
                         <div
                             key={index}
                             onClick={() => setSelectedProject(project)}
-                            className="w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-1.666rem)] group relative flex flex-col bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/50 rounded-4xl overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(124,58,237,0.25)] hover:-translate-y-3 cursor-pointer"
+                            className="w-full sm:w-[calc(50%-1.25rem)] md:w-[calc(33.333%-1.666rem)] max-w-[350px] group relative flex flex-col bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/50 rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(124,58,237,0.25)] hover:-translate-y-3 cursor-pointer"
                         >
                             {/* Image Container */}
-                            <div className="relative aspect-16/10 overflow-hidden">
+                            <div className="relative aspect-video overflow-hidden">
                                 <img
                                     src={project.image}
                                     alt={project.title}
@@ -59,24 +59,24 @@ export default function ProjectSection() {
                                 {/* Hover Overlay */}
                                 <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl scale-50 group-hover:scale-100 transition-transform duration-500">
-                                        <ArrowUpRight className="text-white w-8 h-8" />
+                                        <ArrowUpRight className="text-white w-6 h-6" />
                                     </div>
                                 </div>
 
                                 {/* Category Badge */}
                                 <div className="absolute top-4 left-4">
-                                    <span className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-slate-900 dark:text-white rounded-xl shadow-lg">
+                                    <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-slate-900 dark:text-white rounded-xl shadow-lg">
                                         {project.category}
                                     </span>
                                 </div>
                             </div>
 
                             {/* Card Content */}
-                            <div className="p-8 flex flex-col grow">
-                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-purple-600 transition-colors">
+                            <div className="p-6 flex flex-col grow">
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-purple-600 transition-colors line-clamp-1">
                                     {project.title}
                                 </h3>
-                                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-2">
+                                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
                                     {project.description}
                                 </p>
 
