@@ -1,5 +1,10 @@
-import Groq from 'groq-sdk';
-import { buildPortfolioSystemPrompt, getPortfolioToolResult, portfolioTools } from './Data/Data.js';
+import { GoogleGenAI } from '@google/genai';
+import { AI_CONFIG } from './Config/ai.js';
+import {
+  buildPortfolioSystemPrompt,
+  getPortfolioToolResult,
+  portfolioTools,
+} from './Data/Data.js';
 
 function normalizeHistory(history) {
   if (!Array.isArray(history)) {
@@ -7,11 +12,22 @@ function normalizeHistory(history) {
   }
 
   return history
-    .filter((entry) => entry && typeof entry === 'object' && typeof entry.role === 'string' && typeof entry.content === 'string')
+    .filter(
+      (entry) =>
+        entry &&
+        typeof entry === 'object' &&
+        typeof entry.role === 'string' &&
+        typeof entry.content === 'string'
+    )
     .slice(-5)
     .map((entry) => ({
-      role: entry.role,
-      content: entry.content,
+      role:
+        entry.role === 'assistant'
+          ? 'model'
+          : entry.role === 'user'
+            ? 'user'
+            : 'user',
+      parts: [{ text: entry.content }],
     }));
 }
 
@@ -39,32 +55,24 @@ function parseRequestBody(body) {
   }
 
   if (trimmedBody.startsWith('{') || trimmedBody.startsWith('[')) {
-    return JSON.parse(trimmedBody);
+    try {
+      return JSON.parse(trimmedBody);
+    } catch {
+      return { message: trimmedBody };
+    }
   }
 
   return { message: trimmedBody };
 }
 
-function parseToolArguments(argumentsText) {
-  if (!argumentsText) {
-    return {};
-  }
-
-  if (typeof argumentsText !== 'string') {
-    return argumentsText;
-  }
-
-  try {
-    return JSON.parse(argumentsText);
-  } catch {
-    return {};
-  }
-}
-
 function extractFailedGeneration(err) {
-  const directFailedGeneration = err?.error?.failed_generation || err?.failed_generation;
+  const directFailedGeneration =
+    err?.error?.failed_generation || err?.failed_generation;
 
-  if (typeof directFailedGeneration === 'string' && directFailedGeneration.trim()) {
+  if (
+    typeof directFailedGeneration === 'string' &&
+    directFailedGeneration.trim()
+  ) {
     return directFailedGeneration.trim();
   }
 
@@ -104,62 +112,70 @@ export default async ({ req, res, log, error }) => {
       throw new Error('Message field is missing');
     }
 
-    const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
-    const messages = [{ role: 'system', content: buildPortfolioSystemPrompt() }, ...history, { role: 'user', content: message }];
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-    const model = process.env.GROQ_MODEL || 'groq/compound';
-    const temperature = Number(process.env.GROQ_TEMPERATURE ?? 0.1);
-    const topP = Number(process.env.GROQ_TOP_P ?? 0.8);
-    const maxCompletionTokens = Number(process.env.GROQ_MAX_COMPLETION_TOKENS ?? 1024);
+    // Map portfolioTools to Gemini's expected functionDeclarations structure
+    const functionDeclarations = portfolioTools.map((t) => t.function);
+    const geminiTools =
+      functionDeclarations.length > 0 ? [{ functionDeclarations }] : undefined;
+
+    const contents = [...history, { role: 'user', parts: [{ text: message }] }];
 
     const runCompletion = async () =>
-      client.chat.completions.create({
-        model,
-        messages,
-        tools: portfolioTools,
-        temperature,
-        top_p: topP,
-        max_completion_tokens: maxCompletionTokens,
-        stream: false,
+      ai.models.generateContent({
+        model: AI_CONFIG.MODEL,
+        contents,
+        config: {
+          systemInstruction: buildPortfolioSystemPrompt(),
+          tools: geminiTools,
+          temperature: AI_CONFIG.TEMPERATURE,
+          topP: AI_CONFIG.TOP_P,
+          maxOutputTokens: AI_CONFIG.MAX_OUTPUT_TOKENS,
+        },
       });
 
-    let assistantMessage = (await runCompletion()).choices?.[0]?.message;
+    let response = await runCompletion();
+    let functionCalls = response.functionCalls;
 
-    if (!assistantMessage) {
-      throw new Error('Groq returned an empty response');
-    }
+    if (functionCalls && functionCalls.length > 0) {
+      // Append the model's response part which includes the function calls
+      contents.push(response.candidates[0].content);
 
-    if (assistantMessage.tool_calls?.length) {
-      messages.push(assistantMessage);
+      const functionResponses = [];
 
-      for (const toolCall of assistantMessage.tool_calls) {
-        const toolName = toolCall.function?.name;
-        const toolArguments = parseToolArguments(toolCall.function?.arguments);
+      for (const toolCall of functionCalls) {
+        const toolName = toolCall.name;
+        // In @google/genai, tool arguments are an object directly
+        const toolArguments = toolCall.args || {};
         const toolResult = getPortfolioToolResult(toolName, toolArguments);
 
         if (toolName === 'prepare_contact_form') {
           contactDraft = toolResult;
         }
 
-        messages.push({
-          role: 'tool',
-          tool_call_id: toolCall.id,
-          content: JSON.stringify(toolResult),
+        functionResponses.push({
+          functionResponse: {
+            name: toolName,
+            response: toolResult,
+          },
         });
       }
 
-      assistantMessage = (await runCompletion()).choices?.[0]?.message;
+      // Provide the result of the function calls back to the model
+      contents.push({
+        role: 'user',
+        parts: functionResponses,
+      });
 
-      if (!assistantMessage) {
-        throw new Error('Groq returned an empty response after tool use');
-      }
+      // Call the model again with the function result
+      response = await runCompletion();
     }
 
-    const reply = assistantMessage.content?.trim() || '';
+    const reply = response.text?.trim() || '';
 
     if (!reply) {
       const fallbackReply = getFallbackReply();
-      log('Groq returned no final text; using fallback reply');
+      log('Gemini returned no final text; using fallback reply');
       return res.json({
         success: true,
         reply: fallbackReply,
@@ -167,7 +183,7 @@ export default async ({ req, res, log, error }) => {
       });
     }
 
-    log('Chatbot generated reply via Groq');
+    log('Chatbot generated reply via Gemini');
     log({ success: true, reply, contactDraft });
     return res.json({ success: true, reply, contactDraft });
   } catch (err) {
@@ -175,7 +191,9 @@ export default async ({ req, res, log, error }) => {
     const failedGeneration = extractFailedGeneration(err);
 
     if (message.includes('tool_use_failed') && failedGeneration) {
-      log('Groq tool call failed; returning failed_generation as fallback reply');
+      log(
+        'Gemini tool call failed; returning failed_generation as fallback reply'
+      );
       return res.json({
         success: true,
         reply: failedGeneration,

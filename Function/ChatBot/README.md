@@ -6,11 +6,11 @@ This Appwrite **Node.js Function** powers the portfolio chatbot. It sends the us
 
 ## 🚀 Features
 
-* 💬 Forwards user messages to Groq Chat Completions
-* 🔁 Supports optional `history` to keep the conversation context
-* 🧰 Portfolio tools for navigation, hero, about, projects, experience, skills, credentials, and contact data
-* 📝 Optional `contactDraft` response for contact-form prefill in the UI
-* 🔧 Configurable model, temperature, token limits, and top-p via env vars
+- 💬 Forwards user messages to Groq Chat Completions
+- 🔁 Supports optional `history` to keep the conversation context
+- 🧰 Portfolio tools for navigation, hero, about, projects, experience, skills, credentials, and contact data
+- 📝 Optional `contactDraft` response for contact-form prefill in the UI
+- 🔧 Configurable model, temperature, token limits, and top-p via env vars
 
 ---
 
@@ -66,20 +66,20 @@ The frontend listens for the `portfolio:contact-draft` event and fills the conta
 
 ## 🛠️ Tech Stack
 
-* **Runtime:** Node.js 18
-* **LLM:** Groq via `groq-sdk`
-* **Platform:** Appwrite Functions
+- **Runtime:** Node.js 18
+- **LLM:** Groq via `groq-sdk`
+- **Platform:** Appwrite Functions
 
 ---
 
 ## ⚙️ Configuration
 
-| Setting       | Value                      |
-| ------------- | -------------------------- |
-| Runtime       | Node.js (18.0)             |
-| Entrypoint    | `src/main.js`              |
-| Build Command | `npm install`              |
-| Permissions   | `any`                      |
+| Setting       | Value                            |
+| ------------- | -------------------------------- |
+| Runtime       | Node.js (18.0)                   |
+| Entrypoint    | `src/main.js`                    |
+| Build Command | `npm install`                    |
+| Permissions   | `any`                            |
 | Timeout       | adjust as needed for LLM latency |
 
 ---
@@ -115,9 +115,9 @@ chatbot/
 
 ## 🧠 Notes
 
-* Conversation history is limited to the latest five user/assistant messages.
-* Contact drafts are returned for prefill only; the frontend handles form submission.
-* If the model cannot collect all contact details, it should ask a short follow-up question.
+- Conversation history is limited to the latest five user/assistant messages.
+- Contact drafts are returned for prefill only; the frontend handles form submission.
+- If the model cannot collect all contact details, it should ask a short follow-up question.
 
 ## 📌 Where to integrate
 
