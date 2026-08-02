@@ -100,28 +100,54 @@ function getFallbackReply() {
   return "I couldn't generate a direct answer from the available portfolio data. Please ask about skills, projects, experience, credentials, or contact details.";
 }
 
+const apiKeys = (process.env.GEMINI_API_KEY || '')
+  .split(',')
+  .map((k) => k.trim())
+  .filter(Boolean);
+
+let currentKeyIndex = 0;
+
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function executeWithRetry(operation, maxRetries = 3, logFn = null) {
+async function executeWithRetry(operation, logFn = null) {
+  if (apiKeys.length === 0) {
+    throw new Error('GEMINI_API_KEY environment variable is missing or empty.');
+  }
+
+  const maxRetries = apiKeys.length * 3; // Try each key up to 3 times
   let attempt = 0;
+
   while (attempt < maxRetries) {
     try {
-      return await operation();
+      currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
+      const keyToUse = apiKeys[currentKeyIndex];
+      return await operation(keyToUse);
     } catch (err) {
       const isRateLimit =
         err?.status === 429 ||
         err?.message?.includes('429') ||
         err?.message?.includes('Too Many Requests') ||
-        err?.message?.includes('quota');
+        err?.message?.includes('quota') ||
+        err?.message?.includes('ResourceExhausted');
 
       if (isRateLimit && attempt < maxRetries - 1) {
         attempt++;
-        const waitTime = Math.pow(2, attempt) * 1000 + Math.random() * 1000; // Exponential backoff with jitter
-        if (logFn)
-          logFn(
-            `Rate limit (429) hit. Retrying in ${Math.round(waitTime)}ms (Attempt ${attempt}/${maxRetries - 1})...`
-          );
-        await delay(waitTime);
+
+        // If we have cycled through all available keys, then we wait
+        if (attempt % apiKeys.length === 0) {
+          const cycle = Math.floor(attempt / apiKeys.length);
+          const waitTime = Math.pow(2, cycle) * 5000 + Math.random() * 2000;
+          if (logFn) {
+            logFn(
+              `All keys hit rate limit (429). Retrying in ${Math.round(waitTime)}ms (Cycle ${cycle})...`
+            );
+          }
+          await delay(waitTime);
+        } else {
+          if (logFn) {
+            logFn(`Key rate limited. Instantly switching to next API key...`);
+          }
+        }
       } else {
         throw err;
       }
@@ -141,8 +167,6 @@ export default async ({ req, res, log, error }) => {
       throw new Error('Message field is missing');
     }
 
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
     // Map portfolioTools to Gemini's expected functionDeclarations structure
     const functionDeclarations = portfolioTools.map((t) => t.function);
     const geminiTools =
@@ -151,22 +175,20 @@ export default async ({ req, res, log, error }) => {
     const contents = [...history, { role: 'user', parts: [{ text: message }] }];
 
     const runCompletion = async () =>
-      executeWithRetry(
-        () =>
-          ai.models.generateContent({
-            model: AI_CONFIG.MODEL,
-            contents,
-            config: {
-              systemInstruction: buildPortfolioSystemPrompt(),
-              tools: geminiTools,
-              temperature: AI_CONFIG.TEMPERATURE,
-              topP: AI_CONFIG.TOP_P,
-              maxOutputTokens: AI_CONFIG.MAX_OUTPUT_TOKENS,
-            },
-          }),
-        3,
-        log
-      );
+      executeWithRetry(async (apiKey) => {
+        const ai = new GoogleGenAI({ apiKey });
+        return await ai.models.generateContent({
+          model: AI_CONFIG.MODEL,
+          contents,
+          config: {
+            systemInstruction: buildPortfolioSystemPrompt(),
+            tools: geminiTools,
+            temperature: AI_CONFIG.TEMPERATURE,
+            topP: AI_CONFIG.TOP_P,
+            maxOutputTokens: AI_CONFIG.MAX_OUTPUT_TOKENS,
+          },
+        });
+      }, log);
 
     let response = await runCompletion();
     let functionCalls = response.functionCalls;
