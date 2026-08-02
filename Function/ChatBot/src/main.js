@@ -100,6 +100,35 @@ function getFallbackReply() {
   return "I couldn't generate a direct answer from the available portfolio data. Please ask about skills, projects, experience, credentials, or contact details.";
 }
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function executeWithRetry(operation, maxRetries = 3, logFn = null) {
+  let attempt = 0;
+  while (attempt < maxRetries) {
+    try {
+      return await operation();
+    } catch (err) {
+      const isRateLimit =
+        err?.status === 429 ||
+        err?.message?.includes('429') ||
+        err?.message?.includes('Too Many Requests') ||
+        err?.message?.includes('quota');
+
+      if (isRateLimit && attempt < maxRetries - 1) {
+        attempt++;
+        const waitTime = Math.pow(2, attempt) * 1000 + Math.random() * 1000; // Exponential backoff with jitter
+        if (logFn)
+          logFn(
+            `Rate limit (429) hit. Retrying in ${Math.round(waitTime)}ms (Attempt ${attempt}/${maxRetries - 1})...`
+          );
+        await delay(waitTime);
+      } else {
+        throw err;
+      }
+    }
+  }
+}
+
 export default async ({ req, res, log, error }) => {
   let contactDraft = null;
 
@@ -122,17 +151,22 @@ export default async ({ req, res, log, error }) => {
     const contents = [...history, { role: 'user', parts: [{ text: message }] }];
 
     const runCompletion = async () =>
-      ai.models.generateContent({
-        model: AI_CONFIG.MODEL,
-        contents,
-        config: {
-          systemInstruction: buildPortfolioSystemPrompt(),
-          tools: geminiTools,
-          temperature: AI_CONFIG.TEMPERATURE,
-          topP: AI_CONFIG.TOP_P,
-          maxOutputTokens: AI_CONFIG.MAX_OUTPUT_TOKENS,
-        },
-      });
+      executeWithRetry(
+        () =>
+          ai.models.generateContent({
+            model: AI_CONFIG.MODEL,
+            contents,
+            config: {
+              systemInstruction: buildPortfolioSystemPrompt(),
+              tools: geminiTools,
+              temperature: AI_CONFIG.TEMPERATURE,
+              topP: AI_CONFIG.TOP_P,
+              maxOutputTokens: AI_CONFIG.MAX_OUTPUT_TOKENS,
+            },
+          }),
+        3,
+        log
+      );
 
     let response = await runCompletion();
     let functionCalls = response.functionCalls;

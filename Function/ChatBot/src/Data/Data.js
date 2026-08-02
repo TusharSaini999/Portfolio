@@ -436,101 +436,28 @@ export const portfolioTools = [
   {
     type: 'function',
     function: {
-      name: 'get_navigation_data',
-      description: 'Get the portfolio navigation links and section anchors.',
-      parameters: {
-        type: 'object',
-        properties: {},
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: 'function',
-    function: {
-      name: 'get_hero_data',
+      name: 'get_portfolio_info',
       description:
-        'Get the hero section data including name, title, description, CTA, and social links.',
+        'Get information about Tushar Saini from various sections of his portfolio.',
       parameters: {
         type: 'object',
-        properties: {},
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: 'function',
-    function: {
-      name: 'get_about_data',
-      description:
-        'Get the about section content, education, learning focus, tech stack, interests, and stats.',
-      parameters: {
-        type: 'object',
-        properties: {},
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: 'function',
-    function: {
-      name: 'get_project_data',
-      description:
-        'Get the projects section title, subtitle, description, and project list.',
-      parameters: {
-        type: 'object',
-        properties: {},
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: 'function',
-    function: {
-      name: 'get_experience_data',
-      description: 'Get the experience section title and work history entries.',
-      parameters: {
-        type: 'object',
-        properties: {},
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: 'function',
-    function: {
-      name: 'get_skill_data',
-      description:
-        'Get the skills section title and categorized technical skills.',
-      parameters: {
-        type: 'object',
-        properties: {},
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: 'function',
-    function: {
-      name: 'get_credential_data',
-      description:
-        'REQUIRED for questions about achievements, certifications, credentials, awards, hackathons, competitions, accomplishments, and event management. Returns the complete credentials data.',
-      parameters: {
-        type: 'object',
-        properties: {},
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: 'function',
-    function: {
-      name: 'get_contact_data',
-      description:
-        'Get the contact section title, contact details, social links, and form labels.',
-      parameters: {
-        type: 'object',
-        properties: {},
+        properties: {
+          section: {
+            type: 'string',
+            description: 'The portfolio section to retrieve.',
+            enum: [
+              'navigation',
+              'hero',
+              'about',
+              'projects',
+              'experience',
+              'skills',
+              'credentials',
+              'contact',
+            ],
+          },
+        },
+        required: ['section'],
         additionalProperties: false,
       },
     },
@@ -565,25 +492,33 @@ export const portfolioTools = [
 ];
 
 export const portfolioToolHandlers = {
-  get_navigation_data: () => ({ navigation: navLinks }),
-  get_hero_data: () => heroData,
-  get_about_data: () => aboutData,
-  get_project_data: () => ({ section: projectSection, items: projectData }),
-  get_experience_data: () => ({
-    section: experienceSection,
-    items: experienceData,
-  }),
-  get_skill_data: () => ({ section: skillSection, items: skillsData }),
-  get_credential_data: () => ({
-    section: credentialSection,
-    items: credentialsData,
-  }),
-  get_contact_data: () => ({
-    section: contactSection,
-    details: contactData,
-    socialLinks,
-    formLabels,
-  }),
+  get_portfolio_info: ({ section }) => {
+    switch (section) {
+      case 'navigation':
+        return { navigation: navLinks };
+      case 'hero':
+        return heroData;
+      case 'about':
+        return aboutData;
+      case 'projects':
+        return { section: projectSection, items: projectData };
+      case 'experience':
+        return { section: experienceSection, items: experienceData };
+      case 'skills':
+        return { section: skillSection, items: skillsData };
+      case 'credentials':
+        return { section: credentialSection, items: credentialsData };
+      case 'contact':
+        return {
+          section: contactSection,
+          details: contactData,
+          socialLinks,
+          formLabels,
+        };
+      default:
+        return { error: 'Unknown section' };
+    }
+  },
   prepare_contact_form: ({ fullName = '', email = '', message = '' } = {}) => {
     const draft = {
       fullName: typeof fullName === 'string' ? fullName.trim() : '',
