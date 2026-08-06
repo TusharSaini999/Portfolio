@@ -61,10 +61,10 @@ export const projectData = [
             "TinyMCE",
             "Node.js",
             "Appwrite",
-            "AI Integration",
+            "Groq API(OpenAI)",
         ],
         github: "https://github.com/TusharSaini999/QuickPost-Blogging-Studio",
-        demo: "https://quickpostai.vercel.app/",
+        demo: "https://quickpostai.tusharsaini.tech/",
     },
     {
         title: "LawGenie AI-Powered Legal Research Assistant",
@@ -80,16 +80,16 @@ export const projectData = [
             "MongoDB",
             "RAG",
             "Vector Search",
-            "Groq API"
+            "Gemini API"
         ],
         github: "https://github.com/TusharSaini999/LawGenie-AI",
-        demo: "https://law-genie-ai.vercel.app/",
+        demo: "https://lawgenie.online/",
     },
     {
         title: "CampusEats – Smart Food Ordering Platform",
         category: "Full-Stack / Web",
         description:
-            "A smart food ordering platform designed for college campuses. Students can browse menus, place orders, and track deliveries in real time. Includes a RAG-based AI chatbot powered by the Groq API for food recommendations and user assistance, along with secure authentication, CRUD operations, and live order updates.",
+            "A smart food ordering platform designed for college campuses. Students can browse menus, place orders, and track deliveries in real time. Includes a RAG-based AI chatbot powered by the Gemini API for food recommendations and user assistance, along with secure authentication, CRUD operations, and live order updates.",
         image:
             "Project/campusEats.png",
         tech: [
@@ -99,11 +99,11 @@ export const projectData = [
             "Node.js",
             "MySQL",
             "Leaflet.js",
-            "Groq API",
+            "Gemini API",
             "REST APIs",
         ],
         github: "https://github.com/TusharSaini999/CampusEats",
-        demo: "https://campuseats.netlify.app/",
+        demo: "https://campuseats.tusharsaini.tech/",
     },
     {
         title: "VectorGraph-Engine – AI Retrieval Engine",
@@ -136,10 +136,10 @@ export const projectData = [
             "Express",
             "MongoDB",
             "Redux Toolkit",
-            "Groq API"
+            "Gemini API"
         ],
         github: "https://github.com/TusharSaini999/Resume-Saathi",
-        demo: "https://resume-saathi.vercel.app/",
+        demo: "https://resumesaathi.tusharsaini.tech/",
     }
 ];
 
