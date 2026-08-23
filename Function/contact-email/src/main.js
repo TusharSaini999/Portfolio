@@ -22,9 +22,26 @@ export default async ({ req, res, log, error }) => {
       },
     });
 
+    // Extract and sanitize SMTP_FROM address
+    const rawFrom = process.env.SMTP_FROM || process.env.SMTP_USER;
+    if (!rawFrom) {
+      throw new Error(
+        'Neither SMTP_FROM nor SMTP_USER environment variable is configured.'
+      );
+    }
+
+    const emailMatch = rawFrom.match(/<([^>]+)>/);
+    const cleanFrom = (emailMatch ? emailMatch[1] : rawFrom)
+      .replace(/["']/g, '')
+      .trim();
+
     await transporter.sendMail({
-      from: `"Tushar Saini | Developer Portfolio" <${process.env.SMTP_FROM}>`,
+      from: `"Tushar Saini | Developer Portfolio" <${cleanFrom}>`,
       to: email,
+      envelope: {
+        from: cleanFrom,
+        to: email,
+      },
       subject: 'Message received — Thanks for reaching out',
       html: `
 <!DOCTYPE html>
