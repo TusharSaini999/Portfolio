@@ -10,10 +10,12 @@ export default async ({ req, res, log, error }) => {
       throw new Error('Email field is missing');
     }
 
+    const port = Number(process.env.SMTP_PORT) || 587;
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: false,
+      port,
+      secure: process.env.SMTP_SECURE === 'true' || port === 465,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
@@ -21,7 +23,7 @@ export default async ({ req, res, log, error }) => {
     });
 
     await transporter.sendMail({
-      from: `"Tushar Saini | Developer Portfolio" <${process.env.SMTP_USER}>`,
+      from: `"Tushar Saini | Developer Portfolio" <${process.env.SMTP_FROM}>`,
       to: email,
       subject: 'Message received — Thanks for reaching out',
       html: `
